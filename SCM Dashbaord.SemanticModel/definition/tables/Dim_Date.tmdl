@@ -1,0 +1,188 @@
+table Dim_Date
+	lineageTag: 8adabf67-ac6c-4d1b-ac4d-4f19f980682f
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 08b0c916-014e-454e-8c41-e111ade64e65
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 85db5718-f2e0-4519-99f8-a18d159a79c4
+		summarizeBy: count
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 9063aea5-8bc4-4d45-b8c0-917f06ca7c35
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuarterNo
+		dataType: int64
+		formatString: 0
+		lineageTag: 330f9980-c5da-471d-8155-be57c35d6123
+		summarizeBy: sum
+		sourceColumn: QuarterNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 31cf9564-c56f-4c53-9461-d2488966abe4
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearQuarter
+		dataType: string
+		lineageTag: 3d99f5fe-dad4-48a0-b379-6fbb24369a60
+		summarizeBy: none
+		sourceColumn: YearQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		dataType: int64
+		formatString: 0
+		lineageTag: 1fc2de4d-6397-4e9b-ac6a-e9e10d7ccce0
+		summarizeBy: sum
+		sourceColumn: MonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: 4c5476e8-ef7c-43d0-bba3-2ba51ae9556e
+		summarizeBy: none
+		sourceColumn: MonthName
+		sortByColumn: Fiscal_Month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYear
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7798e640-900d-4032-9a62-6fb1998f26c4
+		summarizeBy: none
+		sourceColumn: MonthYear
+		sortByColumn: Fiscal_Month
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MonthYearSort
+		dataType: int64
+		formatString: 0
+		lineageTag: a7f25c8a-bcf3-4b84-a5ed-eb96c95eb4d8
+		summarizeBy: sum
+		sourceColumn: MonthYearSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStart
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 435d2732-e8f7-4724-b4fa-447d558ad0f2
+		summarizeBy: none
+		sourceColumn: MonthStart
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column WeekOfYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 417f8015-c09b-41f9-9a8c-0868d77ffec9
+		summarizeBy: sum
+		sourceColumn: WeekOfYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayNo
+		dataType: int64
+		formatString: 0
+		lineageTag: 39a06903-e8c8-4dbc-908c-093cd17a4144
+		summarizeBy: sum
+		sourceColumn: DayNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayName
+		dataType: string
+		lineageTag: febfd8d6-08b5-4e9f-a987-e4d5e90acbb1
+		summarizeBy: none
+		sourceColumn: DayName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: f038c37f-158d-4186-952f-71ab8147eda5
+		summarizeBy: sum
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsWeekend
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f6240b4-d6dd-4499-aff2-00fb7fd4fbd8
+		summarizeBy: sum
+		sourceColumn: IsWeekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalYear
+		dataType: string
+		lineageTag: 9137519c-6d6b-4818-957b-f0285d7a1a01
+		summarizeBy: none
+		sourceColumn: FiscalYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fiscal_Month = IF(MONTH([Date])>=4,MONTH([Date])-3,MONTH([Date])+9)
+		formatString: 0
+		lineageTag: 5e92db06-959c-4e06-967f-739548f916bc
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Date = m
+		mode: import
+		source =
+				let
+				    Source = Data,
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Dim_Date csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Dim_Date.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Dim_Date csv",[Delimiter=",", Columns=17, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Date", type date}, {"DateKey", Int64.Type}, {"Year", Int64.Type}, {"QuarterNo", Int64.Type}, {"Quarter", type text}, {"YearQuarter", type text}, {"MonthNo", Int64.Type}, {"MonthName", type text}, {"MonthYear", type date}, {"MonthYearSort", Int64.Type}, {"MonthStart", type date}, {"WeekOfYear", Int64.Type}, {"DayNo", Int64.Type}, {"DayName", type text}, {"DayOfWeek", Int64.Type}, {"IsWeekend", Int64.Type}, {"FiscalYear", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

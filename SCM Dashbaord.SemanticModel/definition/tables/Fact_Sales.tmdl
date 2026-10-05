@@ -1,0 +1,134 @@
+table Fact_Sales
+	lineageTag: 228f24da-a351-4980-bb8c-155489f4500d
+
+	column OrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7426efc2-ca8d-44e1-bf03-9c162e8ce155
+		summarizeBy: count
+		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderLineNo
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d2e3ca2-37a8-40ad-8497-df5d656aeee4
+		summarizeBy: sum
+		sourceColumn: OrderLineNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 733c21fd-2be7-4860-a422-e46099fa224d
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 18ac81fe-f6b3-43ad-a96d-d8459ea72832
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 18effc1a-7ce0-4418-a3a8-b3ba7f5f8c6d
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WarehouseKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 30420ccf-17e4-4228-a373-c2bdad52ad4a
+		summarizeBy: none
+		sourceColumn: WarehouseKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderQty
+		dataType: int64
+		formatString: 0
+		lineageTag: 7eb08c79-1439-4bfa-9e12-85e4e6696137
+		summarizeBy: sum
+		sourceColumn: OrderQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: f4904036-aa31-4d46-8770-e85eee902a4a
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DiscountPct
+		dataType: double
+		lineageTag: ca855f69-9536-4098-a87b-127f54d91157
+		summarizeBy: sum
+		sourceColumn: DiscountPct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SalesAmount
+		dataType: double
+		lineageTag: 0867770b-8fde-421f-b222-f4ebf917a724
+		summarizeBy: sum
+		sourceColumn: SalesAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COGSAmount
+		dataType: double
+		lineageTag: 7a67d7e6-f2f8-4f65-89f7-9cd26170b327
+		summarizeBy: sum
+		sourceColumn: COGSAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ProfitAmount
+		dataType: double
+		lineageTag: 870dbd15-92a4-44ac-9336-1882d0c2d65c
+		summarizeBy: sum
+		sourceColumn: ProfitAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Fact_Sales = m
+		mode: import
+		source =
+				let
+				    Source = Data,
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Sales csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Fact_Sales.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Sales csv",[Delimiter=",", Columns=12, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OrderID", Int64.Type}, {"OrderLineNo", Int64.Type}, {"OrderDate", type date}, {"ProductKey", Int64.Type}, {"CustomerKey", Int64.Type}, {"WarehouseKey", Int64.Type}, {"OrderQty", Int64.Type}, {"UnitPrice", type number}, {"DiscountPct", type number}, {"SalesAmount", type number}, {"COGSAmount", type number}, {"ProfitAmount", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

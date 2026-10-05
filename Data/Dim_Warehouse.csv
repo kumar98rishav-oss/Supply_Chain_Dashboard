@@ -1,0 +1,7 @@
+WarehouseKey,WarehouseID,WarehouseName,Region,State,City,WarehouseType,CapacityUnits,Latitude,Longitude,OpenDate
+1,WH-01,Los Angeles DC,West,CA,Los Angeles,Distribution Center,180000,34.05,-118.24,2016-03-01
+2,WH-02,Dallas DC,Central,TX,Dallas,Distribution Center,150000,32.78,-96.8,2017-06-15
+3,WH-03,Chicago DC,Midwest,IL,Chicago,Distribution Center,140000,41.88,-87.63,2015-09-01
+4,WH-04,Atlanta DC,Southeast,GA,Atlanta,Distribution Center,130000,33.75,-84.39,2018-01-10
+5,WH-05,Newark FC,Northeast,NJ,Newark,Fulfillment Center,110000,40.74,-74.17,2019-05-20
+6,WH-06,Seattle FC,West,WA,Seattle,Fulfillment Center,90000,47.61,-122.33,2020-11-01

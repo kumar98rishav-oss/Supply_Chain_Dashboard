@@ -1,0 +1,52 @@
+table 'PL Lines'
+	lineageTag: cdf946eb-4729-4fe6-a9a3-28e03261e1f8
+
+	column LineID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e6a23279-42bc-45be-b75a-07c81559ff89
+		summarizeBy: none
+		sourceColumn: [LineID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Line
+		dataType: string
+		lineageTag: 149db130-5807-4d9a-90fc-00a4511706f1
+		summarizeBy: none
+		sourceColumn: [Line]
+		sortByColumn: LineID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		isHidden
+		lineageTag: 80241954-8bf3-4a6a-8602-3236922bceb7
+		summarizeBy: none
+		sourceColumn: [Type]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PL Lines' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "LineID", INTEGER,
+				    "Line", STRING,
+				    "Type", STRING,
+				    {
+				        {1, "Gross sales (list price)", "Revenue"},
+				        {2, "Less: Discounts", "Cost"},
+				        {3, "NET REVENUE", "Subtotal"},
+				        {4, "Less: Cost of goods sold", "Cost"},
+				        {5, "GROSS PROFIT", "Subtotal"},
+				        {6, "Less: Outbound freight", "Cost"},
+				        {7, "Less: Purchase price variance", "Cost"},
+				        {8, "NET CONTRIBUTION", "Net"}
+				    }
+				)
+
+	annotation PBI_Id = 5388ec4b390047708633aafe821375b5
+

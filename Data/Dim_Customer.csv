@@ -1,0 +1,51 @@
+CustomerKey,CustomerID,CustomerName,Segment,Channel,Region,State,City,Latitude,Longitude,OnboardDate
+1,CUST-001,Seattle E-commerce 53,E-commerce,Online,West,WA,Seattle,47.61,-122.33,2023-01-24
+2,CUST-002,Detroit E-commerce 62,E-commerce,Online,Midwest,MI,Detroit,42.33,-83.05,2023-01-30
+3,CUST-003,Los Enterprise 44,Enterprise,Direct,West,CA,Los Angeles,34.05,-118.24,2023-02-23
+4,CUST-004,Chicago Enterprise 72,Enterprise,Direct,Midwest,IL,Chicago,41.88,-87.63,2021-11-03
+5,CUST-005,New Retail 02,Retail,Store,Northeast,NY,New York,40.71,-74.01,2021-05-08
+6,CUST-006,Phoenix Retail 70,Retail,Store,West,AZ,Phoenix,33.45,-112.07,2021-11-29
+7,CUST-007,Atlanta Enterprise 74,Enterprise,Direct,Southeast,GA,Atlanta,33.75,-84.39,2020-06-13
+8,CUST-008,Denver E-commerce 06,E-commerce,Online,West,CO,Denver,39.74,-104.99,2022-01-14
+9,CUST-009,Los E-commerce 01,E-commerce,Online,West,CA,Los Angeles,34.05,-118.24,2022-10-14
+10,CUST-010,New Retail 87,Retail,Store,Northeast,NY,New York,40.71,-74.01,2022-08-06
+11,CUST-011,Miami E-commerce 41,E-commerce,Online,Southeast,FL,Miami,25.76,-80.19,2021-09-12
+12,CUST-012,Chicago Wholesale 09,Wholesale,Distributor,Midwest,IL,Chicago,41.88,-87.63,2018-05-08
+13,CUST-013,Detroit Retail 37,Retail,Store,Midwest,MI,Detroit,42.33,-83.05,2022-05-14
+14,CUST-014,Nashville E-commerce 45,E-commerce,Online,Southeast,TN,Nashville,36.16,-86.78,2020-03-17
+15,CUST-015,Boston Enterprise 25,Enterprise,Direct,Northeast,MA,Boston,42.36,-71.06,2022-06-25
+16,CUST-016,Denver Enterprise 57,Enterprise,Direct,West,CO,Denver,39.74,-104.99,2021-04-01
+17,CUST-017,Miami Retail 25,Retail,Store,Southeast,FL,Miami,25.76,-80.19,2023-04-23
+18,CUST-018,Nashville E-commerce 30,E-commerce,Online,Southeast,TN,Nashville,36.16,-86.78,2020-01-15
+19,CUST-019,Miami E-commerce 53,E-commerce,Online,Southeast,FL,Miami,25.76,-80.19,2023-08-12
+20,CUST-020,Seattle Wholesale 64,Wholesale,Distributor,West,WA,Seattle,47.61,-122.33,2023-02-01
+21,CUST-021,Miami Enterprise 16,Enterprise,Direct,Southeast,FL,Miami,25.76,-80.19,2019-12-30
+22,CUST-022,Chicago Wholesale 50,Wholesale,Distributor,Midwest,IL,Chicago,41.88,-87.63,2020-11-27
+23,CUST-023,Seattle Wholesale 90,Wholesale,Distributor,West,WA,Seattle,47.61,-122.33,2021-03-14
+24,CUST-024,Atlanta Retail 12,Retail,Store,Southeast,GA,Atlanta,33.75,-84.39,2022-08-18
+25,CUST-025,Nashville Retail 93,Retail,Store,Southeast,TN,Nashville,36.16,-86.78,2022-02-25
+26,CUST-026,Phoenix Retail 30,Retail,Store,West,AZ,Phoenix,33.45,-112.07,2023-02-18
+27,CUST-027,Denver Wholesale 77,Wholesale,Distributor,West,CO,Denver,39.74,-104.99,2020-03-24
+28,CUST-028,Denver Wholesale 63,Wholesale,Distributor,West,CO,Denver,39.74,-104.99,2021-01-15
+29,CUST-029,Nashville Wholesale 16,Wholesale,Distributor,Southeast,TN,Nashville,36.16,-86.78,2020-08-05
+30,CUST-030,Miami Enterprise 22,Enterprise,Direct,Southeast,FL,Miami,25.76,-80.19,2023-06-25
+31,CUST-031,Nashville E-commerce 59,E-commerce,Online,Southeast,TN,Nashville,36.16,-86.78,2019-11-02
+32,CUST-032,Phoenix Enterprise 04,Enterprise,Direct,West,AZ,Phoenix,33.45,-112.07,2021-07-15
+33,CUST-033,Phoenix Wholesale 47,Wholesale,Distributor,West,AZ,Phoenix,33.45,-112.07,2018-09-22
+34,CUST-034,Atlanta Retail 23,Retail,Store,Southeast,GA,Atlanta,33.75,-84.39,2023-02-14
+35,CUST-035,Los E-commerce 35,E-commerce,Online,West,CA,Los Angeles,34.05,-118.24,2020-04-25
+36,CUST-036,Boston E-commerce 69,E-commerce,Online,Northeast,MA,Boston,42.36,-71.06,2020-01-20
+37,CUST-037,Boston E-commerce 58,E-commerce,Online,Northeast,MA,Boston,42.36,-71.06,2021-07-06
+38,CUST-038,Denver E-commerce 31,E-commerce,Online,West,CO,Denver,39.74,-104.99,2021-01-02
+39,CUST-039,Houston Enterprise 34,Enterprise,Direct,Central,TX,Houston,29.76,-95.37,2023-02-09
+40,CUST-040,Boston Retail 43,Retail,Store,Northeast,MA,Boston,42.36,-71.06,2021-03-15
+41,CUST-041,Atlanta E-commerce 52,E-commerce,Online,Southeast,GA,Atlanta,33.75,-84.39,2021-02-11
+42,CUST-042,Philadelphia Enterprise 51,Enterprise,Direct,Northeast,PA,Philadelphia,39.95,-75.16,2018-08-19
+43,CUST-043,Minneapolis E-commerce 55,E-commerce,Online,Midwest,MN,Minneapolis,44.98,-93.27,2018-02-18
+44,CUST-044,Dallas Retail 91,Retail,Store,Central,TX,Dallas,32.78,-96.8,2020-05-26
+45,CUST-045,Minneapolis E-commerce 72,E-commerce,Online,Midwest,MN,Minneapolis,44.98,-93.27,2024-01-06
+46,CUST-046,Atlanta Wholesale 79,Wholesale,Distributor,Southeast,GA,Atlanta,33.75,-84.39,2023-07-12
+47,CUST-047,Houston Wholesale 51,Wholesale,Distributor,Central,TX,Houston,29.76,-95.37,2021-10-15
+48,CUST-048,Minneapolis Wholesale 49,Wholesale,Distributor,Midwest,MN,Minneapolis,44.98,-93.27,2021-10-19
+49,CUST-049,New Retail 06,Retail,Store,Northeast,NY,New York,40.71,-74.01,2020-05-11
+50,CUST-050,Los Enterprise 83,Enterprise,Direct,West,CA,Los Angeles,34.05,-118.24,2019-01-26

@@ -1,0 +1,94 @@
+table 'CY_Dynamic Line'
+	lineageTag: 050c80f5-204d-472d-b998-ef0741dafc50
+
+	measure CY_line =
+			
+			-- use the hidden Order column: referencing the display column of a field-parameter table raises a composite-key error
+			VAR sel = SELECTEDVALUE ( 'CY_Dynamic Line'[CY_Dynamic Line Order], 0 )
+			RETURN
+			    SWITCH (
+			        sel,
+			        0, [Revenue],
+			        1, [OTIF%],
+			        2, [In_full %],
+			        3, [On_Time %]
+			    )
+		lineageTag: 82b78655-bc73-420d-a31d-68a27988e312
+
+		formatStringDefinition = SWITCH ( SELECTEDVALUE ( 'CY_Dynamic Line'[CY_Dynamic Line Order], 0 ), 0, "$#,0", "0.0%" )
+
+	measure PY_line =
+			
+			VAR sel = SELECTEDVALUE ( 'CY_Dynamic Line'[CY_Dynamic Line Order], 0 )
+			VAR cur = [CY_line]
+			RETURN
+			    IF (
+			        NOT ISBLANK ( cur ),
+			        SWITCH (
+			            sel,
+			            0, CALCULATE ( [Revenue],   DATEADD ( Dim_Date[Date], -12, MONTH ) ),
+			            1, CALCULATE ( [OTIF%],     DATEADD ( Dim_Date[Date], -12, MONTH ) ),
+			            2, CALCULATE ( [In_full %], DATEADD ( Dim_Date[Date], -12, MONTH ) ),
+			            3, CALCULATE ( [On_Time %], DATEADD ( Dim_Date[Date], -12, MONTH ) )
+			        )
+			    )
+		lineageTag: 2ec247f7-abef-47d4-a051-b7a2c336291e
+
+		formatStringDefinition = SWITCH ( SELECTEDVALUE ( 'CY_Dynamic Line'[CY_Dynamic Line Order], 0 ), 0, "$#,0", "0.0%" )
+
+	measure Dynamic_Title =
+			
+			VAR sel = SELECTEDVALUE ( 'CY_Dynamic Line'[CY_Dynamic Line Order], 0 )
+			RETURN
+			    "Trend Comparison of "
+			        & SWITCH ( sel, 0, "Revenue", 1, "OTIF %", 2, "In-full %", 3, "On-time %" )
+			        & " vs Prior Year"
+		lineageTag: 2fe84b27-ed13-4a19-885a-d48754538563
+
+	column 'CY_Dynamic Line'
+		lineageTag: acdef968-dce0-4d5e-b546-bb39fdcf5c86
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'CY_Dynamic Line Order'
+
+		relatedColumnDetails
+			groupByColumn: 'CY_Dynamic Line Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CY_Dynamic Line Fields'
+		isHidden
+		lineageTag: f1b35025-6427-41a1-87fe-a2879384b522
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'CY_Dynamic Line Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CY_Dynamic Line Order'
+		isHidden
+		formatString: 0
+		lineageTag: ee8abe36-fda4-4214-ba42-6bcbb2688aed
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'CY_Dynamic Line' = calculated
+		mode: import
+		source =
+				{
+				    ("Revenue", NAMEOF('_Measures'[Revenue]), 0),
+				    ("OTIF%", NAMEOF('_Measures'[OTIF%]), 1),
+				    ("In_full %", NAMEOF('_Measures'[In_full %]), 2),
+				    ("On_Time %", NAMEOF('_Measures'[On_Time %]), 3)
+				}
+
+	annotation PBI_Id = 09b4977f328041afbe9d3cca67de26d1
+

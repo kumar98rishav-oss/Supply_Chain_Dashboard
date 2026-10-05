@@ -1,0 +1,115 @@
+table Dim_Customer
+	lineageTag: b62f3916-8318-4b8f-9ce4-451e6a993c36
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f5bea5b-d116-4d8b-94b5-6b7e50ff94cf
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: string
+		lineageTag: 5f0fbf0b-2c7b-4d34-9ff6-1ba8d68664d9
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerName
+		dataType: string
+		lineageTag: 52cf7173-375a-492b-97e8-2704ee841c00
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: f7068b66-7cff-44d2-a2e8-8401ded24c03
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 9d0082a7-0932-4775-9980-e99f74b0933b
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 0c141030-5db4-4b27-b003-af7d8baa51f2
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 996ee0f5-2fbd-438c-85d8-43b3f6733f82
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 5ec560d4-01b6-4e5e-a5c4-d3568b84a9ec
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude
+		dataType: double
+		lineageTag: 32e7bc06-be9f-41d1-9f89-19bb082ba5b2
+		summarizeBy: sum
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude
+		dataType: double
+		lineageTag: 669d3d89-0624-425e-8c47-60a54f5e1050
+		summarizeBy: sum
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OnboardDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 669c288c-b9ba-49c9-a049-848b4fdb4b75
+		summarizeBy: none
+		sourceColumn: OnboardDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Dim_Customer = m
+		mode: import
+		source =
+				let
+				  Source = Folder.Files(path),
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Dim_Customer csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Dim_Customer.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Dim_Customer csv",[Delimiter=",", Columns=11, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerKey", Int64.Type}, {"CustomerID", type text}, {"CustomerName", type text}, {"Segment", type text}, {"Channel", type text}, {"Region", type text}, {"State", type text}, {"City", type text}, {"Latitude", type number}, {"Longitude", type number}, {"OnboardDate", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

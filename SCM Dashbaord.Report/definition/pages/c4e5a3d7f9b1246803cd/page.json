@@ -1,0 +1,181 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "c4e5a3d7f9b1246803cd",
+  "displayName": "Supplier Scorecard",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filter8c1f0a2b3d4e5f60718293a4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Supplier"
+              }
+            },
+            "Property": "SupplierName"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "Dim_Supplier",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "SupplierName"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Pacific Rim Traders'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "3793e3810426a2d9684f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Supplier"
+              }
+            },
+            "Property": "RiskTier"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "Dim_Supplier",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "RiskTier"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'High'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "Pod",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "Param_Filter8c1f0a2b3d4e5f60718293a4",
+        "boundFilter": "Filter8c1f0a2b3d4e5f60718293a4",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Supplier"
+              }
+            },
+            "Property": "SupplierName"
+          }
+        }
+      },
+      {
+        "name": "53d1b2b705ec755d13da",
+        "boundFilter": "3793e3810426a2d9684f",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Dim_Supplier"
+              }
+            },
+            "Property": "RiskTier"
+          }
+        }
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#EEF2F7'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode"
+}

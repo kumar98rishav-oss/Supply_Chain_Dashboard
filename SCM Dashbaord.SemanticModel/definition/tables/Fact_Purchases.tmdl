@@ -1,0 +1,199 @@
+table Fact_Purchases
+	lineageTag: 783e539c-354c-4d32-979c-ae639b376cca
+
+	column POID
+		dataType: string
+		lineageTag: 178112a6-0fd6-4919-a0a4-2574edf92f6e
+		summarizeBy: none
+		sourceColumn: POID
+
+		annotation SummarizationSetBy = Automatic
+
+	column POLineNo
+		dataType: int64
+		formatString: 0
+		lineageTag: 75eca8a6-7204-4405-b757-11a2c8ab938c
+		summarizeBy: sum
+		sourceColumn: POLineNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 90dffa68-7e0c-42ab-83bb-ae8233df5ae7
+		summarizeBy: none
+		sourceColumn: SupplierKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ffc7c6b0-fc61-4d11-b8ed-4d045247bdba
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WarehouseKey
+		dataType: int64
+		formatString: 0
+		lineageTag: cc990b6b-da98-4ee7-8343-c6fb7d96c65d
+		summarizeBy: none
+		sourceColumn: WarehouseKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b89da609-f334-4950-b22d-a2f6a2620d7e
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PromisedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 77233083-b57a-487a-a45a-d4c0d08367ac
+		summarizeBy: none
+		sourceColumn: PromisedDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ReceivedDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a30ccebc-5c92-4492-b4a8-1b8e783bcdbf
+		summarizeBy: none
+		sourceColumn: ReceivedDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column OrderedQty
+		dataType: int64
+		formatString: 0
+		lineageTag: 2318bbdf-b345-4e6f-829c-4f1c0f28c637
+		summarizeBy: sum
+		sourceColumn: OrderedQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReceivedQty
+		dataType: int64
+		formatString: 0
+		lineageTag: ce186db0-b507-43d0-9e3e-9c05b7db8472
+		summarizeBy: sum
+		sourceColumn: ReceivedQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column StandardUnitCost
+		dataType: double
+		lineageTag: a3e5dcea-113a-4bad-9175-d098f9838fcc
+		summarizeBy: sum
+		sourceColumn: StandardUnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ActualUnitCost
+		dataType: double
+		lineageTag: ea25fb78-52be-42f8-92bd-2c13e63bd411
+		summarizeBy: sum
+		sourceColumn: ActualUnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column POAmount
+		dataType: double
+		lineageTag: c4a7cc12-9ed5-48b9-b77c-654717c51484
+		summarizeBy: sum
+		sourceColumn: POAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ActualLeadTimeDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d1ee252-b4be-4826-82c9-d1771329a696
+		summarizeBy: sum
+		sourceColumn: ActualLeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column PlannedLeadTimeDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b63f9db-4b12-44e8-8026-76225dba9d35
+		summarizeBy: sum
+		sourceColumn: PlannedLeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnTimeFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 515c92d5-b8e7-4fad-a8cd-7e0787bc19e1
+		summarizeBy: sum
+		sourceColumn: OnTimeFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column InFullFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 9bf0e2d7-f270-4ab2-a146-d5616000d0bf
+		summarizeBy: sum
+		sourceColumn: InFullFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column DefectQty
+		dataType: int64
+		formatString: 0
+		lineageTag: 9608f6bb-8fc7-4433-b7e6-2ade03f29423
+		summarizeBy: sum
+		sourceColumn: DefectQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column DefectRatePct
+		dataType: double
+		lineageTag: 6eba3e0d-05f8-4460-9738-6ff5811c5b68
+		summarizeBy: sum
+		sourceColumn: DefectRatePct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Fact_Purchases = m
+		mode: import
+		source =
+				let
+				    Source = Data,
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Purchases csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Fact_Purchases.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Purchases csv",[Delimiter=",", Columns=19, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"POID", type text}, {"POLineNo", Int64.Type}, {"SupplierKey", Int64.Type}, {"ProductKey", Int64.Type}, {"WarehouseKey", Int64.Type}, {"OrderDate", type date}, {"PromisedDate", type date}, {"ReceivedDate", type date}, {"OrderedQty", Int64.Type}, {"ReceivedQty", Int64.Type}, {"StandardUnitCost", type number}, {"ActualUnitCost", type number}, {"POAmount", type number}, {"ActualLeadTimeDays", Int64.Type}, {"PlannedLeadTimeDays", Int64.Type}, {"OnTimeFlag", Int64.Type}, {"InFullFlag", Int64.Type}, {"DefectQty", Int64.Type}, {"DefectRatePct", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

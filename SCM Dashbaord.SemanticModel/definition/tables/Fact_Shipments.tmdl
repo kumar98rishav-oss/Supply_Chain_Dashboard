@@ -1,0 +1,170 @@
+table Fact_Shipments
+	lineageTag: 0991b480-065b-4bff-83c0-97b57aec6e06
+
+	column ShipmentID
+		dataType: string
+		lineageTag: 3ba9417c-e2ae-4ace-a5b5-4aab8e0bfa2e
+		summarizeBy: none
+		sourceColumn: ShipmentID
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ead8343-9947-4d89-82b3-99f23e6528c3
+		summarizeBy: count
+		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ff3d0950-3709-4dbe-bcc1-cb37ccff2d3e
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WarehouseKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 60a0dc3a-d40e-4223-92b7-19fbec43bfc6
+		summarizeBy: none
+		sourceColumn: WarehouseKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShipMode
+		dataType: string
+		lineageTag: ac44abf2-89cd-44f6-b965-7079a9f88f02
+		summarizeBy: none
+		sourceColumn: ShipMode
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 346a3807-069b-4a0f-b317-fa92eae53228
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ShipDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d9f54836-b67f-4b10-819b-161853a7f2fe
+		summarizeBy: none
+		sourceColumn: ShipDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PromisedDeliveryDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e7a6aafd-8d35-40ba-a70e-1855b00247db
+		summarizeBy: none
+		sourceColumn: PromisedDeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ActualDeliveryDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2150c528-7ac0-454e-8726-a477a6f618a2
+		summarizeBy: none
+		sourceColumn: ActualDeliveryDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column OrderedQty
+		dataType: int64
+		formatString: 0
+		lineageTag: 070547fe-53b6-497d-9c46-a72fcfbf9f35
+		summarizeBy: sum
+		sourceColumn: OrderedQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column ShippedQty
+		dataType: int64
+		formatString: 0
+		lineageTag: c3af6bdc-8d3d-45f0-91e3-75fe2e8cc41d
+		summarizeBy: sum
+		sourceColumn: ShippedQty
+
+		annotation SummarizationSetBy = Automatic
+
+	column FreightCost
+		dataType: double
+		lineageTag: d605eb33-b34c-4b27-8316-62f25f870e5f
+		summarizeBy: sum
+		sourceColumn: FreightCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TransitDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ae3a338-98a1-48cc-9b12-2273f0972c31
+		summarizeBy: sum
+		sourceColumn: TransitDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnTimeFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 132ff169-faaf-4ecd-bc42-e6b10b5e0730
+		summarizeBy: sum
+		sourceColumn: OnTimeFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column InFullFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: c65fc22a-0a7c-4b20-b62b-f45f3eae0dd0
+		summarizeBy: sum
+		sourceColumn: InFullFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column OTIFFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a69b5ef-0b08-40cc-aa28-63583034a705
+		summarizeBy: sum
+		sourceColumn: OTIFFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Shipments = m
+		mode: import
+		source =
+				let
+				    Source = Data,
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Shipments csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Fact_Shipments.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Shipments csv",[Delimiter=",", Columns=16, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ShipmentID", type text}, {"OrderID", Int64.Type}, {"CustomerKey", Int64.Type}, {"WarehouseKey", Int64.Type}, {"ShipMode", type text}, {"OrderDate", type date}, {"ShipDate", type date}, {"PromisedDeliveryDate", type date}, {"ActualDeliveryDate", type date}, {"OrderedQty", Int64.Type}, {"ShippedQty", Int64.Type}, {"FreightCost", type number}, {"TransitDays", Int64.Type}, {"OnTimeFlag", Int64.Type}, {"InFullFlag", Int64.Type}, {"OTIFFlag", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

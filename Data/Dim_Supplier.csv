@@ -1,0 +1,21 @@
+SupplierKey,SupplierID,SupplierName,Country,Region,SupplierType,RiskScore,RiskTier,ReliabilityRating,PreferredSupplier,PlannedLeadTimeDays,PaymentTermsDays,Certification,OnboardDate
+1,SUP-001,Acme Components,USA,North America,Domestic,10,Low,97.5,1,6,90,ISO 9001 + 14001,2021-10-26
+2,SUP-002,Vertex Manufacturing,China,Asia,International,48,Medium,89.8,0,42,30,ISO 9001 + 14001,2019-07-19
+3,SUP-003,Nordic Supply Co,Germany,Europe,International,51,High,93.7,0,39,90,ISO 9001 + 14001,2017-10-19
+4,SUP-004,Pacific Rim Traders,Mexico,North America,Domestic,97,High,74.0,0,44,30,None,2017-10-12
+5,SUP-005,Summit Industrial,Vietnam,Asia,International,13,Low,96.8,1,8,90,ISO 9001 + 14001,2017-11-10
+6,SUP-006,BlueWave Partners,India,Asia,International,49,Medium,91.5,0,37,90,ISO 9001 + 14001,2020-07-28
+7,SUP-007,Orion Materials,Taiwan,Asia,International,69,High,83.2,0,43,90,ISO 9001 + 14001,2017-03-14
+8,SUP-008,Zenith Global,South Korea,Asia,International,44,Medium,91.6,0,23,60,ISO 9001,2016-02-22
+9,SUP-009,Crestline Goods,Canada,North America,Domestic,15,Low,95.7,1,5,45,ISO 9001,2017-04-15
+10,SUP-010,IronGate Supply,USA,North America,Domestic,23,Low,96.7,1,15,60,ISO 9001,2015-02-26
+11,SUP-011,EastPort Imports,China,Asia,International,81,High,78.0,0,38,45,ISO 9001,2015-09-23
+12,SUP-012,Cedar & Co,Germany,Europe,International,62,High,82.2,0,23,90,ISO 9001,2015-08-14
+13,SUP-013,Meridian Works,Mexico,North America,Domestic,23,Low,95.6,1,9,60,IATF 16949,2020-04-12
+14,SUP-014,Falcon Distributors,Vietnam,Asia,International,56,High,85.2,0,29,45,ISO 9001,2019-12-11
+15,SUP-015,Granite Peak Supply,India,Asia,International,60,High,82.7,0,38,60,ISO 9001,2019-10-08
+16,SUP-016,Lumen Trading,Taiwan,Asia,International,65,High,83.2,0,33,60,ISO 9001,2018-02-28
+17,SUP-017,Apex Sourcing,South Korea,Asia,International,65,High,86.1,0,37,30,ISO 9001,2019-11-28
+18,SUP-018,Harbor Industrial,Canada,North America,Domestic,29,Medium,92.3,0,12,30,ISO 9001 + 14001,2016-02-08
+19,SUP-019,Quanta Supply,USA,North America,Domestic,20,Low,96.0,1,14,30,ISO 9001 + 14001,2021-03-01
+20,SUP-020,Sierra Components,China,Asia,International,42,Medium,89.6,0,28,30,None,2018-06-06

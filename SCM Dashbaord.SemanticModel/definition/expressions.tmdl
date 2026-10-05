@@ -1,0 +1,18 @@
+expression path = "E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 25b39077-fc73-47a2-bf36-417a08643e01
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression Data =
+		let
+		  Source = Folder.Files(path)
+		in
+		    Source
+	lineageTag: ea1ce783-bd7d-427f-9e28-e077c50e6a0c
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

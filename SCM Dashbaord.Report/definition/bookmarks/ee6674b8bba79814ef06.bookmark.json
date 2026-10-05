@@ -1,0 +1,1410 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Executive: show inventory by category",
+  "name": "ee6674b8bba79814ef06",
+  "options": {
+    "targetVisualNames": [
+      "1a8213b1279d661a5d85"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "9f1c7076334a2b72cc74",
+    "sections": {
+      "9f1c7076334a2b72cc74": {
+        "visualContainers": {
+          "0224aebb7f2a88e80ef3": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "e3978fcc87d3efc09d62",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Supplier OTD Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "043d495265fcb05450b9": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "dad488f7af1707229963",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "42be689f0e345f9c8e29",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Avg Inventory Value"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "b37f8279920762ce0343",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Inventory Turn Over (Annul)"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0dfe5375428e9723e708",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "DIO (Days)"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineClusteredColumnComboChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Inventory Turn Over (Annul)"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "0c141adfe3ea3375086d": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "1a8213b1279d661a5d85": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "1f927766db0b47e45a8b": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "292ebb149cecc6603cfc",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Warehouse"
+                        }
+                      },
+                      "Property": "WarehouseName"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5a3e85f063978e916bcf",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF%"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "a408c7ae122341e426f4",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF On Track"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "f34619707d936a3fdba9",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF Watch"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3940a8bc0f4816d48b8b",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF At Risk"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "barChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF%"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Warehouse"
+                        }
+                      },
+                      "Property": "WarehouseName"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "231674866d2c446f2ab3": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "34971c1d3c48d81013f0",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Gross Margin Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "301c719d4db91da23175": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d20835c6ccd7ecbbeff3",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Warehouse"
+                        }
+                      },
+                      "Property": "Region"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Warehouse"
+                        }
+                      },
+                      "Property": "Region"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "308ba8dbecbee1147ffd": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "9b6536db2bb2ae04b263",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Gross Margin %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "3d21e500264cbd25033d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c412334f441ffad13a66",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Fact_Shipments"
+                        }
+                      },
+                      "Property": "ShipMode"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Fact_Shipments"
+                        }
+                      },
+                      "Property": "ShipMode"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "40bdb02df56ea3189843": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "ff6c73a2d0d2f9478b10",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Inventory Turn Over (Annul)"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "4972cb71d7f37de4efe2": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "378751588c23c9ddeb27",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF%"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "49e0f9e98b4780577a79": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "2ef7bf51dd4650db1cc7",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTD%"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "4fa9b27d719d46066354": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "7e3ecb47daa070bcb0ce": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "85cdbe36511a0712007f": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "2a3aacb67e71119cb7d3",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Stockout Rate %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "87a1ca034444d7dfa914": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "9565d0aa1c341f97c144": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "ad4b281e9277c2134350",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Supplier"
+                        }
+                      },
+                      "Property": "RiskTier"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ee69ba2de0f3cf6eabf5",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTD%"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "3d30fcdde6f94cf53a3f",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Supplier OTD On Track"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "7d7a4687749891f07a1e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Supplier OTD Watch"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ae1aaae672a985bab736",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Supplier OTD At Risk"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTD%"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Supplier"
+                        }
+                      },
+                      "Property": "RiskTier"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "9b46974d25b8e395f04e": {
+            "singleVisual": {
+              "visualType": "shape",
+              "objects": {}
+            }
+          },
+          "abc1e7617bcd97356e88": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d7f5e21efc75bc7e5185",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Stockout Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "c2e5bfb0922be9235414": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "8da3e24a8e2415ea9c21",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "c7ae652d2d0d4bd05382": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "03a8458d2450876c11f8",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Revenue"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "cef88f85e367c511bb03": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c9bca6df8a642bad8250",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "d842cc011553cdd4f993": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "bb8bc6cf6ded256e9d0b",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Date"
+                        }
+                      },
+                      "Property": "MonthStart"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8d81bb537c0dc532e7e3",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CY_Dynamic Line"
+                        }
+                      },
+                      "Property": "CY_line"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4bcacf6475ffa135a40c",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CY_Dynamic Line"
+                        }
+                      },
+                      "Property": "PY_line"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "lineChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Date"
+                        }
+                      },
+                      "Property": "MonthStart"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Date"
+                        }
+                      },
+                      "Property": "MonthStart"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ef42b872cb5cac13900d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a06d1e56be06436e28e3",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Revenue YoY % (vs PY)"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "f0a87c2fb740c96e0cb0": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "0ea34a91d0174f2e37e1",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Date"
+                        }
+                      },
+                      "Property": "Year"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Date"
+                        }
+                      },
+                      "Property": "Year"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "f29dff16b4ef49126db7": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "c19b875a013d460b73bc",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Inventory Turns Status"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "cardVisual",
+              "objects": {}
+            }
+          },
+          "f77a65e51de3e8ba7f27": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "6cf0c410ae7f9e935686",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Warehouse"
+                        }
+                      },
+                      "Property": "WarehouseName"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0edff474bdc9da53073a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Revenue"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4ac49f88111920855036",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Gross Margin %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "68cc19c8583b4ede6abb",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF%"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d87ddb29b3e08685ee49",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Freight % of Sales"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5a415751efc706288e99",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Stockout Rate %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "pivotTable",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "OTIF%"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Rows": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Warehouse"
+                        }
+                      },
+                      "Property": "WarehouseName"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "f8bdb388410702737883": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "361199ad06c0693917c3",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "CY_Dynamic Line"
+                        }
+                      },
+                      "Property": "CY_Dynamic Line"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "advancedSlicerVisual",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "c",
+                                "Entity": "CY_Dynamic Line",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "In": {
+                                    "Expressions": [
+                                      {
+                                        "Column": {
+                                          "Expression": {
+                                            "SourceRef": {
+                                              "Source": "c"
+                                            }
+                                          },
+                                          "Property": "CY_Dynamic Line Fields"
+                                        }
+                                      }
+                                    ],
+                                    "Values": [
+                                      [
+                                        {
+                                          "Literal": {
+                                            "Value": "'''_Measures''[OTIF%]'"
+                                          }
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "cachedFilterDisplayItems": [
+                {
+                  "id": {
+                    "scopeId": {
+                      "Comparison": {
+                        "ComparisonKind": 0,
+                        "Left": {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Entity": "CY_Dynamic Line"
+                              }
+                            },
+                            "Property": "CY_Dynamic Line Fields"
+                          }
+                        },
+                        "Right": {
+                          "Literal": {
+                            "Value": "'''_Measures''[OTIF%]'"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "displayName": "OTIF%"
+                }
+              ]
+            }
+          },
+          "fa8db0648cfab02ced04": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "369c82a567b413aec6d2",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "97007a92961aba255b3b",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Revenue"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e55753300a8cadc26169",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Gross_Profit"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "clusteredBarChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Revenue"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "fb73d73e6ad6d1a3a9eb": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "a2e343eb133306cbe943",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ecba9dfc8e4487f51384",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Stockout Rate %"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "184cb55cce7c70ba5a23",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Excess Inventory %"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "clusteredBarChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Stockout Rate %"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Dim_Product"
+                        }
+                      },
+                      "Property": "Category"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

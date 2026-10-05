@@ -1,0 +1,91 @@
+relationship 06519d47-973f-ec93-6823-683704aba0f6
+	fromColumn: Fact_Inventory.SnapshotDate
+	toColumn: Dim_Date.Date
+
+relationship 000a08c5-3459-87c3-4d18-0d5d04087ccd
+	fromColumn: Fact_Purchases.OrderDate
+	toColumn: Dim_Date.Date
+
+relationship 4c9ab8fa-345d-03cd-8d37-33978f893d9e
+	isActive: false
+	fromColumn: Fact_Purchases.PromisedDate
+	toColumn: Dim_Date.Date
+
+relationship 05d9c6ac-7718-9780-6ddd-94ea80680ae6
+	isActive: false
+	fromColumn: Fact_Purchases.ReceivedDate
+	toColumn: Dim_Date.Date
+
+relationship 0a22260a-60ab-6efc-257f-e5f02d58877b
+	fromColumn: Fact_Sales.OrderDate
+	toColumn: Dim_Date.Date
+
+relationship 70668a20-38b7-5948-dceb-1ac0f97aa59b
+	fromColumn: Fact_Shipments.ActualDeliveryDate
+	toColumn: Dim_Date.Date
+
+relationship 856840c0-126f-b516-e8f2-bb5f36ef7aeb
+	isActive: false
+	fromColumn: Fact_Shipments.OrderDate
+	toColumn: Dim_Date.Date
+
+relationship 111b0e98-6c89-632b-328f-529097d6f097
+	isActive: false
+	fromColumn: Fact_Shipments.PromisedDeliveryDate
+	toColumn: Dim_Date.Date
+
+relationship 4feb34d3-ab8f-2990-5063-7ea98d01a8d9
+	isActive: false
+	fromColumn: Fact_Shipments.ShipDate
+	toColumn: Dim_Date.Date
+
+relationship 737eeb53-59e7-768d-c3dd-3d72f2fb6dc4
+	fromColumn: Fact_Purchases.ProductKey
+	toColumn: Dim_Product.ProductKey
+
+relationship 403684bf-fe6f-6df4-856a-f98755865848
+	fromColumn: Fact_Sales.ProductKey
+	toColumn: Dim_Product.ProductKey
+
+relationship dc06905b-9cf4-78fc-4d54-b85c9343e343
+	fromColumn: Fact_Purchases.SupplierKey
+	toColumn: Dim_Supplier.SupplierKey
+
+relationship 3e099fe0-955d-67a4-10f5-c2b4e88baaa3
+	fromColumn: Fact_Inventory.WarehouseKey
+	toColumn: Dim_Warehouse.WarehouseKey
+
+relationship b85f25ab-3dfd-74f6-123b-829c191c1b5c
+	fromColumn: Fact_Shipments.WarehouseKey
+	toColumn: Dim_Warehouse.WarehouseKey
+
+relationship 4aa2e04d-3dc9-ce7d-7a24-a04663b5485a
+	fromColumn: Fact_Sales.WarehouseKey
+	toColumn: Dim_Warehouse.WarehouseKey
+
+relationship AutoDetected_68fbfe43-f31d-401f-89bc-af2cb134f1e6
+	fromColumn: Fact_Sales.CustomerKey
+	toColumn: Dim_Customer.CustomerKey
+
+relationship AutoDetected_89a315e1-f48c-48cf-b1c7-e7c61375a282
+	fromColumn: Fact_Shipments.CustomerKey
+	toColumn: Dim_Customer.CustomerKey
+
+relationship c83ce2eb-fa22-c65d-df8e-3a00f26f87eb
+	fromColumn: Fact_Inventory.ProductKey
+	toColumn: Dim_Product.ProductKey
+
+relationship a21da0d0-0f28-9b21-dd69-a79d6f076864
+	fromColumn: Fact_Purchases.WarehouseKey
+	toColumn: Dim_Warehouse.WarehouseKey
+
+relationship c8d4c4d2-7fe1-3ae6-5654-d89cdb1b47b3
+	isActive: false
+	fromColumn: Fact_Sales.OrderID
+	toColumn: Fact_Shipments.OrderID
+
+relationship 22ccceed-728b-0290-3ec1-d14f4816efba
+	isActive: false
+	fromColumn: Dim_Product.PrimarySupplierKey
+	toColumn: Dim_Supplier.SupplierKey
+

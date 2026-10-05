@@ -1,0 +1,481 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "3263675b319045568324",
+  "position": {
+    "x": 32,
+    "y": 276,
+    "z": 0,
+    "height": 374,
+    "width": 936,
+    "tabOrder": 2200
+  },
+  "visual": {
+    "visualType": "deneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "query": {
+      "queryState": {
+        "dataset": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Supplier"
+                    }
+                  },
+                  "Property": "SupplierName"
+                }
+              },
+              "queryRef": "Dim_Supplier.SupplierName",
+              "nativeQueryRef": "Supplier",
+              "displayName": "Supplier"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Dim_Supplier"
+                    }
+                  },
+                  "Property": "RiskTier"
+                }
+              },
+              "queryRef": "Dim_Supplier.RiskTier",
+              "nativeQueryRef": "Tier",
+              "displayName": "Tier"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "OTD%"
+                }
+              },
+              "queryRef": "_Measures.OTD%",
+              "nativeQueryRef": "OTD",
+              "displayName": "OTD"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Supplier Defect Rate %"
+                }
+              },
+              "queryRef": "_Measures.Supplier Defect Rate %",
+              "nativeQueryRef": "Defect",
+              "displayName": "Defect"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "PO Spend"
+                }
+              },
+              "queryRef": "_Measures.PO Spend",
+              "nativeQueryRef": "Spend",
+              "displayName": "Spend"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "vega": [
+        {
+          "properties": {
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'vegaLite'"
+                }
+              }
+            },
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6.4.3'"
+                }
+              }
+            },
+            "jsonSpec": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"$schema\":\"https://vega.github.io/schema/vega-lite/v5.json\",\"data\":{\"name\":\"dataset\"},\"width\":\"container\",\"height\":\"container\",\"padding\":{\"left\":6,\"right\":16,\"top\":6,\"bottom\":4},\"layer\":[{\"data\":{\"values\":[{\"x\":0.6,\"x2\":0.88,\"y\":0.03,\"y2\":0.06}]},\"mark\":{\"type\":\"rect\",\"color\":\"#D64545\",\"opacity\":0.08},\"encoding\":{\"x\":{\"field\":\"x\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0.6,1]}},\"x2\":{\"field\":\"x2\"},\"y\":{\"field\":\"y\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0,0.06]}},\"y2\":{\"field\":\"y2\"}}},{\"data\":{\"values\":[{\"v\":0.88}]},\"mark\":{\"type\":\"rule\",\"strokeDash\":[5,4],\"color\":\"#9AA8BC\"},\"encoding\":{\"x\":{\"field\":\"v\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0.6,1]}}}},{\"data\":{\"values\":[{\"v\":0.03}]},\"mark\":{\"type\":\"rule\",\"strokeDash\":[5,4],\"color\":\"#9AA8BC\"},\"encoding\":{\"y\":{\"field\":\"v\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0,0.06]}}}},{\"data\":{\"values\":[{\"t\":\"HIGH-RISK ZONE\",\"x\":0.605,\"y\":0.0585}]},\"mark\":{\"type\":\"text\",\"align\":\"left\",\"fontSize\":10,\"fontWeight\":\"bold\",\"color\":\"#D64545\"},\"encoding\":{\"x\":{\"field\":\"x\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0.6,1]}},\"y\":{\"field\":\"y\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0,0.06]}},\"text\":{\"field\":\"t\"}}},{\"data\":{\"values\":[{\"t\":\"RELIABLE AND CLEAN\",\"x\":0.995,\"y\":0.0015}]},\"mark\":{\"type\":\"text\",\"align\":\"right\",\"fontSize\":10,\"fontWeight\":\"bold\",\"color\":\"#2E9E6B\"},\"encoding\":{\"x\":{\"field\":\"x\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0.6,1]}},\"y\":{\"field\":\"y\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0,0.06]}},\"text\":{\"field\":\"t\"}}},{\"mark\":{\"type\":\"circle\",\"opacity\":0.85,\"stroke\":\"#ffffff\",\"strokeWidth\":1.5},\"encoding\":{\"x\":{\"field\":\"OTD\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0.6,1]},\"axis\":{\"format\":\".0%\",\"title\":\"On-time delivery (higher is better)\"}},\"y\":{\"field\":\"Defect\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0,0.06]},\"axis\":{\"format\":\".0%\",\"title\":\"Defect rate (lower is better)\"}},\"size\":{\"field\":\"Spend\",\"type\":\"quantitative\",\"scale\":{\"range\":[150,2200]},\"legend\":null},\"color\":{\"field\":\"Tier\",\"type\":\"nominal\",\"scale\":{\"domain\":[\"High\",\"Medium\",\"Low\"],\"range\":[\"#D64545\",\"#E8A33D\",\"#2E9E6B\"]},\"legend\":{\"title\":\"Risk tier\",\"orient\":\"top\",\"direction\":\"horizontal\"}},\"tooltip\":[{\"field\":\"Supplier\"},{\"field\":\"Tier\",\"title\":\"Risk tier\"},{\"field\":\"OTD\",\"title\":\"On-time %\",\"format\":\".1%\"},{\"field\":\"Defect\",\"title\":\"Defect rate\",\"format\":\".1%\"},{\"field\":\"Spend\",\"title\":\"PO spend\",\"format\":\"$,.0f\"}]}},{\"transform\":[{\"filter\":\"datum.Spend > 900000 || datum.OTD < 0.82 || datum.Defect > 0.04\"}],\"mark\":{\"type\":\"text\",\"dy\":-16,\"fontSize\":9.5,\"fontWeight\":\"bold\",\"color\":\"#0B1F3A\"},\"encoding\":{\"x\":{\"field\":\"OTD\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0.6,1]}},\"y\":{\"field\":\"Defect\",\"type\":\"quantitative\",\"scale\":{\"domain\":[0,0.06]}},\"text\":{\"field\":\"Supplier\"}}}],\"config\":{\"font\":\"Segoe UI\",\"background\":null,\"view\":{\"stroke\":null},\"axis\":{\"labelColor\":\"#5B6B82\",\"titleColor\":\"#5B6B82\",\"gridColor\":\"#EAEFF6\",\"domainColor\":\"#E3E8F0\",\"tickColor\":\"#E3E8F0\",\"labelFontSize\":10,\"titleFontSize\":11},\"legend\":{\"labelFontSize\":10,\"titleFontSize\":10,\"labelColor\":\"#5B6B82\",\"titleColor\":\"#5B6B82\"}}}'"
+                }
+              }
+            },
+            "jsonConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "enableTooltips": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableContextMenu": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableHighlight": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'svg'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stateManagement": [
+        {
+          "properties": {
+            "viewportHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "314D"
+                }
+              }
+            },
+            "viewportWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "914D"
+                }
+              }
+            },
+            "supportFieldConfiguration": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"Supplier\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"Tier\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"OTD\":{\"highlight\":true,\"highlightStatus\":true,\"highlightComparator\":true,\"format\":true,\"formatted\":true,\"names\":false},\"Defect\":{\"highlight\":true,\"highlightStatus\":true,\"highlightComparator\":true,\"format\":true,\"formatted\":true,\"names\":false},\"Spend\":{\"highlight\":true,\"highlightStatus\":true,\"highlightComparator\":true,\"format\":true,\"formatted\":true,\"names\":false}}'"
+                }
+              }
+            },
+            "denebMetaVersion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2'"
+                }
+              }
+            },
+            "consolidateFieldParameters": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "developer": [
+        {
+          "properties": {
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2.0.0.0'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "editor": [
+        {
+          "properties": {
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "showLineNumbers": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "showViewportMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "previewScrollbars": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "backgroundPassThrough": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Supplier risk quadrant: reliability vs quality (bubble = spend)'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0B1F3A'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI Semibold'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Deneb scatter plot of supplier on-time delivery against defect rate, sized by spend and coloured by risk tier'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

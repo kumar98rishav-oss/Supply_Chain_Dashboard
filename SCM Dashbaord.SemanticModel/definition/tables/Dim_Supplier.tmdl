@@ -1,0 +1,141 @@
+table Dim_Supplier
+	lineageTag: 0e21723c-cf6b-4f35-8dac-0dc396073c2f
+
+	column SupplierKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 7244ddb0-341b-40c7-aaa1-cdc70b8a7de0
+		summarizeBy: none
+		sourceColumn: SupplierKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierID
+		dataType: string
+		lineageTag: 5ba67862-c4ff-414d-8108-dbb56736a999
+		summarizeBy: none
+		sourceColumn: SupplierID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierName
+		dataType: string
+		lineageTag: 72f06afa-116b-4ff8-a385-697f60dc4771
+		summarizeBy: none
+		sourceColumn: SupplierName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 1b422365-2bb9-4a1f-8aa1-578077cf564f
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: d354ac74-2e91-483b-87f0-d71cb5e08387
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column SupplierType
+		dataType: string
+		lineageTag: 6190575f-9258-486d-a87a-0e5f4fbc9e47
+		summarizeBy: none
+		sourceColumn: SupplierType
+
+		annotation SummarizationSetBy = Automatic
+
+	column RiskScore
+		dataType: int64
+		formatString: 0
+		lineageTag: 07a9076b-fe7b-4070-8bfe-9b0221646eff
+		summarizeBy: none
+		sourceColumn: RiskScore
+
+		annotation SummarizationSetBy = Automatic
+
+	column RiskTier
+		dataType: string
+		lineageTag: c6a82cc9-fdfd-4dc7-abe2-e439fa94a65f
+		summarizeBy: none
+		sourceColumn: RiskTier
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReliabilityRating
+		dataType: double
+		lineageTag: 854233cc-9b76-434f-bd25-9bc2166d2523
+		summarizeBy: none
+		sourceColumn: ReliabilityRating
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PreferredSupplier
+		dataType: int64
+		formatString: 0
+		lineageTag: e045f362-d4ac-4e6c-ae70-d58dc06ed0c7
+		summarizeBy: none
+		sourceColumn: PreferredSupplier
+
+		annotation SummarizationSetBy = Automatic
+
+	column PlannedLeadTimeDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 04e225cd-d885-47d3-8655-a11bd8669364
+		summarizeBy: none
+		sourceColumn: PlannedLeadTimeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentTermsDays
+		dataType: int64
+		formatString: 0
+		lineageTag: 6deb4a2e-9f0f-4e9d-bc68-ddeb2ae48480
+		summarizeBy: none
+		sourceColumn: PaymentTermsDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column Certification
+		dataType: string
+		lineageTag: eec266a2-3b7b-48da-ac62-717962c8452e
+		summarizeBy: none
+		sourceColumn: Certification
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnboardDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 74702d73-9d1e-4796-86b9-57420a613dde
+		summarizeBy: none
+		sourceColumn: OnboardDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Dim_Supplier = m
+		mode: import
+		source =
+				let
+				    Source = Data,
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Dim_Supplier csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Dim_Supplier.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Dim_Supplier csv",[Delimiter=",", Columns=14, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SupplierKey", Int64.Type}, {"SupplierID", type text}, {"SupplierName", type text}, {"Country", type text}, {"Region", type text}, {"SupplierType", type text}, {"RiskScore", Int64.Type}, {"RiskTier", type text}, {"ReliabilityRating", type number}, {"PreferredSupplier", Int64.Type}, {"PlannedLeadTimeDays", Int64.Type}, {"PaymentTermsDays", Int64.Type}, {"Certification", type text}, {"OnboardDate", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

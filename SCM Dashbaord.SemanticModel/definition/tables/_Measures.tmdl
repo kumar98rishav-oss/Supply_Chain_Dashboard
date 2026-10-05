@@ -1,0 +1,929 @@
+table _Measures
+	lineageTag: bd61d705-c511-401a-8f02-cda76560aec1
+
+	measure Gross_Profit = SUM(Fact_Sales[ProfitAmount])
+		displayFolder: 01 Control Tower
+		lineageTag: 681355a8-232d-4d1f-8b36-e8b09e049aa4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Order Line' = COUNTROWS(Fact_Sales)
+		formatString: 0
+		displayFolder: 01 Control Tower
+		lineageTag: a72abe43-f5ea-4184-bef7-bd7e2d66f6c7
+
+	measure 'Order Count' = DISTINCTCOUNT(Fact_Sales[OrderID])
+		formatString: 0
+		displayFolder: 01 Control Tower
+		lineageTag: 80f46589-8016-49c5-af0a-1f247352ed4a
+
+	measure 'Total Discount Value' =
+			
+			SUMX(Fact_Sales,Fact_Sales[OrderQty]*Fact_Sales[UnitPrice]*Fact_Sales[DiscountPct])
+		formatString: 0
+		displayFolder: 01 Control Tower
+		lineageTag: cecf0aff-81d5-4ba1-83d0-abfdeb7ca949
+
+	measure 'Margin Leakage' =
+			
+			DIVIDE(SUMX(Fact_Sales,Fact_Sales[OrderQty]*Fact_Sales[UnitPrice]*Fact_Sales[DiscountPct]),
+			SUMX(Fact_Sales,Fact_Sales[OrderQty]*Fact_Sales[UnitPrice]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01 Control Tower
+		lineageTag: 5fe18105-dc6a-4285-9b30-aa9df6c077ca
+
+	measure 'In_full %' = DIVIDE(CALCULATE(COUNTROWS(Fact_Shipments),Fact_Shipments[InFullFlag]=1),COUNTROWS(Fact_Shipments))
+		formatString: 0%;-0%;0%
+		displayFolder: 01 Control Tower
+		lineageTag: 3307c669-7352-48c6-bdf2-b8be8687f7aa
+
+	measure OTIF% = DIVIDE([OTIF],COUNTROWS(Fact_Shipments))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01 Control Tower
+		lineageTag: 8fcc0282-c09d-4ea4-9ca1-2070dd01c666
+
+	measure On_Time_Delivery =
+			
+			CALCULATE(COUNTROWS(Fact_Shipments),Fact_Shipments[ActualDeliveryDate]=Fact_Shipments[PromisedDeliveryDate])
+		formatString: 0
+		displayFolder: 01 Control Tower
+		lineageTag: d8cd5c72-1938-473a-99e4-76492eb958ec
+
+	measure 'Avg Order Value' = DIVIDE([Revenue],[Order Count])
+		displayFolder: 01 Control Tower
+		lineageTag: 3e18e520-56cc-4d28-b395-c5413dbfd772
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gorss Margin' = DIVIDE([Total COGS],[Revenue])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01 Control Tower
+		lineageTag: bf93277d-ef31-4afe-be8b-93606ac899be
+
+	measure 'On_Time %' = DIVIDE(CALCULATE(COUNTROWS(Fact_Shipments),Fact_Shipments[OnTimeFlag]=1),COUNTROWS(Fact_Shipments))
+		formatString: 0%;-0%;0%
+		displayFolder: 01 Control Tower
+		lineageTag: d9238149-fc0c-472e-85a4-fa00436fe449
+
+	measure OTIF =
+			CALCULATE(COUNTROWS(Fact_Shipments),
+			Fact_Shipments[InFullFlag]=1, Fact_Shipments[OnTimeFlag]=1)
+		formatString: 0
+		displayFolder: 01 Control Tower
+		lineageTag: 930050d9-d621-4282-b1bf-58884f64ba7b
+
+	measure Revenue = SUMX(Dim_Product,SUMX(RELATEDTABLE(Fact_Sales),Fact_Sales[SalesAmount]))
+		formatString: \$#,0
+		displayFolder: 01 Control Tower
+		lineageTag: 948fe3e1-3651-48cd-bc60-98850ec81327
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total COGS' = SUM(Fact_Sales[COGSAmount])
+		displayFolder: 01 Control Tower
+		lineageTag: f07808bc-39c0-42d1-8b8e-4f593d46d656
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inbound OTD' = CALCULATE(COUNTROWS(Fact_Purchases),Fact_Purchases[OnTimeFlag]=1)
+		formatString: 0
+		displayFolder: 01 Control Tower
+		lineageTag: d3604365-e243-4f1f-ab68-7c0b685b7d1d
+
+	measure OTD% = DIVIDE(CALCULATE(COUNTROWS(Fact_Purchases),Fact_Purchases[OnTimeFlag]=1),COUNTROWS(Fact_Purchases))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01 Control Tower
+		lineageTag: 8e1a9367-8142-4163-b819-1d9851a0e4c6
+
+	measure 'Inventory Turn Over (Annul)' =
+			
+			var _moths = DISTINCTCOUNT(Fact_Inventory[SnapshotDate])
+			var _anuuaCOGS = DIVIDE([Total COGS],_moths)*12
+			
+			RETURN
+			DIVIDE(_anuuaCOGS,[Avg Inventory Value])
+		displayFolder: 01 Control Tower
+		lineageTag: 4bda18b3-5cca-4baf-9016-0e5549cae62f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Turns Status' =
+			VAR _val = [Inventory Turn Over (Annul)]
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "Inventory Turns" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "Inventory Turns" )
+			RETURN
+			    SWITCH ( TRUE (), _val >= _g, "On Track", _val >= _a, "Watch", "At Risk" )
+		displayFolder: 01 Control Tower
+		lineageTag: 6efced60-5b0a-4de0-830e-7d9a2b0fe7ed
+
+	measure 'Revenue PY' = CALCULATE([Revenue], DATEADD(Dim_Date[Date],-1,YEAR))
+		displayFolder: Time Intelligeance
+		lineageTag: c4b72de2-a4e8-4b08-8d48-d431c98dfa2d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Sold' = SUM(Fact_Sales[OrderQty])
+		formatString: 0
+		displayFolder: 01 Control Tower
+		lineageTag: 0c2bcec4-ec73-45fc-806f-d47926c55c31
+
+	measure 'Revenue CY' =
+			
+			var last_year = YEAR(DATE("2024","12","31"))
+			
+			RETURN
+			CALCULATE([Revenue],FILTER(ALL(Dim_Date[Year]),Dim_Date[Year]=last_year))
+		displayFolder: Time Intelligeance
+		lineageTag: b8c0b7d1-300b-4830-924f-9f0add9c9bde
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue YOY' = [Revenue] - [Revenue PY]
+		displayFolder: Time Intelligeance
+		lineageTag: f056b65c-96ac-4e29-83af-9dc911fbb9aa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue YOY%' = DIVIDE([Revenue YOY],[Revenue CY])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Time Intelligeance
+		lineageTag: 40cbca75-451f-48f9-b015-ccf36ea41055
+
+	measure 'Revenue PY YTD' =
+			
+			TOTALYTD([Revenue],Dim_Date[Date])
+		displayFolder: Time Intelligeance
+		lineageTag: fb7c8bb6-c548-4847-b034-1fe34ff0ddbd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MOM %' =
+			
+			var _pre_mnth = CALCULATE([Revenue],DATEADD(Dim_Date[Date],-1,MONTH))
+			
+			var _cur_mnth = CALCULATE([Revenue],REMOVEFILTERS(Dim_Date[MonthNo]))
+			
+			RETURN
+			DIVIDE(_cur_mnth-_pre_mnth,_pre_mnth)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Time Intelligeance
+		lineageTag: bab9a09e-5d32-4d31-8b24-592a5f28ba15
+
+	measure 'Avg Revenue Rolling 3M' =
+			
+			AVERAGEX(DATESINPERIOD(Dim_Date[Date],MAX(Dim_Date[Date]),-3,MONTH),[Revenue])
+		displayFolder: Time Intelligeance
+		lineageTag: 22143492-39b1-4e0b-9dcd-b604b52f4ffe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Rolling 12M' =
+			
+			CALCULATE([Revenue],DATESINPERIOD(Dim_Date[Date],MAX(Dim_Date[Date]),-12,MONTH))
+		displayFolder: Time Intelligeance
+		lineageTag: e62ab54b-a91f-4b85-bde6-eabc6b19a11e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gross Profit PY' = CALCULATE([Gross_Profit],DATEADD(Dim_Date[Date],-1,YEAR))
+		displayFolder: Time Intelligeance
+		lineageTag: 6feb2ba4-b466-4fee-9091-92033f9d7c07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'OTIF % PY' = CALCULATE([OTIF%],DATEADD(Dim_Date[Date],-12,MONTH))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Time Intelligeance
+		lineageTag: 7e9d9788-8c18-4c18-bed3-a4a978702715
+
+	measure 'OTIF % YoY (pp)' = [OTIF%]-[OTIF % PY]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Time Intelligeance
+		lineageTag: 66db0e2c-65d3-47b8-97f7-a98f821b9e59
+
+	measure 'Avg Inventory Value' = AVERAGEX(VALUES(Fact_Inventory[SnapshotDate]),CALCULATE(SUM(Fact_Inventory[InventoryValue])))
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: a8cd6ed9-e9d3-493e-bb7f-89ebd9467a97
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Closing Inventory Value' =
+			
+			var _max_snap = max(Fact_Inventory[SnapshotDate])
+			
+			RETURN
+			CALCULATE(SUM(Fact_Inventory[InventoryValue]),Fact_Inventory[SnapshotDate]=_max_snap)
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 9ad5d94b-63e9-4e84-b081-363807888ef9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg On-Hand Units' =
+			
+			AVERAGEX(VALUES(Fact_Inventory[SnapshotDate]),CALCULATE(SUM(Fact_Inventory[OnHandUnits])))
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 48ca18cb-bf0e-471b-8134-9bc5571ba3cc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Closing On-Hand Units' =
+			
+			var _max_snap = MAX(Fact_Inventory[SnapshotDate])
+			
+			RETURN
+			CALCULATE(SUM(Fact_Inventory[OnHandUnits]),Fact_Inventory[SnapshotDate]=_max_snap)
+		formatString: 0
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: b82e4786-f691-4564-a066-72d610525ca2
+
+	measure 'Closing Available Units' =
+			
+			var _max_snap = MAX(Fact_Inventory[SnapshotDate])
+			
+			RETURN
+			CALCULATE(SUM(Fact_Inventory[AvailableUnits]),Fact_Inventory[SnapshotDate]=_max_snap)
+		formatString: 0
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: af728614-94ba-42d4-a7e2-ec985ec80465
+
+	measure 'DIO (Days)' = DIVIDE(365,[Inventory Turn Over (Annul)])
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 0941f2d3-44a9-4fdd-9bf3-140f3324078e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Stock-out SKU-Months' = CALCULATE(COUNTROWS(Fact_Inventory),Fact_Inventory[StockoutFlag]=1)
+		formatString: 0
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 5a7d8381-6710-40c3-8e14-fd4b6f415849
+
+	measure 'Active SKU-Months' = CALCULATE(COUNTROWS(Fact_Inventory),Fact_Inventory[DaysOfSupply]>0)
+		formatString: 0
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: e4494c3e-ef7a-43b2-b6fd-a005fc0d6d4c
+
+	measure 'Stockout Rate %' = DIVIDE([Stock-out SKU-Months],[Active SKU-Months])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: f5a4f12b-9fd4-4296-9680-2c6996c289e8
+
+	measure 'Stock Availability %' = 1-[Stockout Rate %]
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 90f1eeb9-cdd7-498f-80e1-5a6096fad8ad
+
+	measure 'Excess Inventory Value' =
+			
+			AVERAGEX(VALUES(Fact_Inventory[SnapshotDate]),CALCULATE(SUM(Fact_Inventory[InventoryValue]),Fact_Inventory[ExcessFlag]=1))
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: ea64e0d5-9922-42b1-a968-194772994794
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Excess Inventory %' = DIVIDE([Excess Inventory Value],[Avg Inventory Value])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 7c28b78c-badd-4e98-a8ae-307791219bb0
+
+	measure 'Dead Stock Value' =
+			
+			AVERAGEX(VALUES(Fact_Inventory[SnapshotDate]),CALCULATE(SUM(Fact_Inventory[InventoryValue]),Fact_Inventory[InventoryAgeDays]>180))
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: b7c448c2-510d-4678-84a1-2e00945a4715
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SKUs Below Reorder Point' =
+			
+			CALCULATE(DISTINCTCOUNT(Fact_Inventory[ProductKey]),FILTER(Fact_Inventory,Fact_Inventory[OnHandUnits]<Fact_Inventory[ReorderPoint] && Fact_Inventory[DaysOfSupply]>0))
+		formatString: 0
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 62abe699-c71b-43b9-8879-60908b651aab
+
+	measure 'Avg Days of Supply' = CALCULATE(AVERAGE(Fact_Inventory[DaysOfSupply]),Fact_Inventory[DaysOfSupply]>0)
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: 21dace25-f065-47dc-b4c0-3057c6bdc7b5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Active SKU Count' = DISTINCTCOUNT(Fact_Inventory[ProductKey])
+		formatString: 0
+		displayFolder: 02 Inventory & Stock Health
+		lineageTag: ec957883-a28f-452c-9013-8eefb7d68fab
+
+	measure 'Shipments Count' = COUNTROWS(Fact_Shipments)
+		formatString: 0
+		displayFolder: 03 Supplier, Fulfilment & Logistics
+		lineageTag: 49647960-d728-46b6-adc1-3357d5862a17
+
+	measure 'Late Shipments' = CALCULATE(COUNTROWS(Fact_Shipments),Fact_Shipments[OnTimeFlag]=0)
+		formatString: 0
+		displayFolder: 03 Supplier, Fulfilment & Logistics
+		lineageTag: 873eeae3-c7c3-4d4f-a837-cb150196913a
+
+	measure 'Fill Rate %' = DIVIDE(SUM(Fact_Shipments[ShippedQty]),SUM(Fact_Shipments[OrderedQty]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 03 Supplier, Fulfilment & Logistics
+		lineageTag: 94a0be66-d25b-4aff-9391-1b8a9701b4af
+
+	measure 'Avg Transit Days' = AVERAGE(Fact_Shipments[TransitDays])
+		displayFolder: 03 Supplier, Fulfilment & Logistics
+		lineageTag: d1125a61-033c-4786-a1cb-c2ef86e9d4da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Order Cycle Time (Days)' = AVERAGEX(Fact_Shipments,Fact_Shipments[ActualDeliveryDate]-Fact_Shipments[OrderDate])
+		formatString: 0
+		displayFolder: 03 Supplier, Fulfilment & Logistics
+		lineageTag: 2c8d97b5-b72f-4896-8324-e6bafabc9f52
+
+	measure 'OTIF % by Delivery Date' = CALCULATE([OTIF%],USERELATIONSHIP(Dim_Date[Date],Fact_Shipments[ActualDeliveryDate]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 03 Supplier, Fulfilment & Logistics
+		lineageTag: 1716c88b-4550-4092-bf42-32e4b70f0390
+
+	measure 'Cross-Region Shipments %' =
+			
+			var _cross = SUMX(Fact_Shipments,IF(RELATED(Dim_Warehouse[Region])<>RELATED(Dim_Customer[Region]),1,0))
+			
+			RETURN
+			DIVIDE(_cross,COUNTROWS(Fact_Shipments))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 03 Supplier, Fulfilment & Logistics
+		lineageTag: 16e02905-8275-48c8-8100-6e95508d7f84
+
+	measure 'PO Count' = DISTINCTCOUNT(Fact_Purchases[POID])
+		formatString: 0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: f1d17841-a944-4ac4-b214-01e1b7ff3f09
+
+	measure 'PO Spend' = SUM(Fact_Purchases[POAmount])
+		formatString: \$#,0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 72e7147b-fdcd-46b1-ae7c-208e18d03585
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Supplier Count' = DISTINCTCOUNT(Fact_Purchases[SupplierKey])
+		formatString: 0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 567e2daf-eaee-4b2c-93e6-4e84b3fa4ea4
+
+	measure 'Supplier Defect Rate %' =
+			DIVIDE(
+			    SUM(Fact_Purchases[DefectQty]),SUM(Fact_Purchases[ReceivedQty]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 5a2de5b8-2f5d-4091-aba3-3b9083231d37
+
+	measure 'Avg Lead Time (Actual)' = AVERAGEX(Fact_Purchases,Fact_Purchases[ReceivedDate]-Fact_Purchases[OrderDate])
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 7520a6c7-d9cd-471c-9816-f4f77fbccc9c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Lead Time Variance' =
+			
+			AVERAGEX(Fact_Purchases,Fact_Purchases[ActualLeadTimeDays]-Fact_Purchases[PlannedLeadTimeDays])
+		formatString: 0.00
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: f1f1ad20-f37f-449b-bca4-b3f8f35f4b37
+
+	measure 'PPV (Purchase Price Variance)' = SUMX(Fact_Purchases,(Fact_Purchases[ActualUnitCost]-Fact_Purchases[StandardUnitCost])*Fact_Purchases[ReceivedQty])
+		formatString: \$#,0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 5eb97300-b7a1-4b97-80b5-7590c3e863b7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PPV %' =
+			
+			DIVIDE([PPV (Purchase Price Variance)],SUMX(Fact_Purchases,Fact_Purchases[StandardUnitCost]*Fact_Purchases[ReceivedQty]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 88936440-bdf5-415f-9cac-d925666a250e
+
+	measure 'High-Risk Supplier Spend' = CALCULATE([PO Spend],Dim_Supplier[RiskTier]="High")
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 99e80efd-2d26-4451-8e35-8c6e21dfdb8b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'High-Risk Spend %' = DIVIDE([High-Risk Supplier Spend],CALCULATE([PO Spend],ALL(Dim_Supplier)))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 2bef2e0f-3d25-47b9-b1c1-cefde9019edf
+
+	measure 'Revenue Exposed to High-Risk Suppliers' = CALCULATE([Revenue],Dim_Supplier[RiskTier]="High",USERELATIONSHIP(Dim_Supplier[SupplierKey],Dim_Product[PrimarySupplierKey]))
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 4cffd901-6939-4497-bfec-a41e5a82f7de
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Exposure %' = DIVIDE([Revenue Exposed to High-Risk Suppliers],CALCULATE([Revenue],ALL(Dim_Supplier)))
+		formatString: 0%;-0%;0%
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 15397138-d5cd-4049-974b-df3d15f7028a
+
+	measure 'SKUs from High-Risk Suppliers' = CALCULATE(DISTINCTCOUNT(Fact_Purchases[ProductKey]),Dim_Supplier[RiskTier]="High")
+		formatString: 0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 95044f02-b1f5-418e-aeb7-7e1d645c5763
+
+	measure 'Top Supplier Spend % (Concentration)' =
+			
+			var _total = CALCULATE([PO Spend],ALL(Dim_Supplier))
+			
+			var _top = MAXX(VALUES(Dim_Supplier[SupplierKey]),CALCULATE([PO Spend]))
+			
+			RETURN
+			DIVIDE(_top,_total)
+		formatString: 0%;-0%;0%
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 96e20ee3-7840-41c2-a8ec-485e802dd63e
+
+	measure 'Freight Cost' = SUM(Fact_Shipments[FreightCost])
+		formatString: \$#,0
+		displayFolder: 05 Freight & Logistics Cost
+		lineageTag: 0b31ea0a-da4a-4908-857a-1c28d3a246b8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Freight % of Sales' = DIVIDE([Freight Cost],[Revenue])
+		formatString: 0%;-0%;0%
+		displayFolder: 05 Freight & Logistics Cost
+		lineageTag: f149c13d-04e5-4814-ac3a-0ecdb2588a1f
+
+	measure 'Freight per Order' = DIVIDE([Freight Cost],COUNTROWS(Fact_Shipments))
+		formatString: \$#,0.00
+		displayFolder: 05 Freight & Logistics Cost
+		lineageTag: 573d13a7-ee3e-418d-8f13-4644da8b193a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Freight per Unit' = DIVIDE([Freight Cost],SUM(Fact_Shipments[OrderedQty]))
+		displayFolder: 05 Freight & Logistics Cost
+		lineageTag: 41d7e299-2aae-46f6-acc6-1365cd4dfc41
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gross Margin %' = DIVIDE([Gross_Profit],[Revenue])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: 01 Control Tower
+		lineageTag: f7bb3e61-940e-49a6-90d7-60f2c8fc96db
+
+	measure 'Gross Profit PY %' = DIVIDE([Gross Profit PY],CALCULATE([Revenue],DATEADD(Dim_Date[Date],-1,YEAR)))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Time Intelligeance
+		lineageTag: 1f59db08-c8f9-492c-b75e-c98a936dee98
+
+	measure 'OTIF Status' =
+			VAR _v = [OTIF%] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "OTIF" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "OTIF" )
+			RETURN
+			    IF ( ISBLANK ( [OTIF%] ), BLANK (), SWITCH ( TRUE (), _v >= _g, "On Track", _v >= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: d4ad05a7-aecb-4c87-82b9-2717f2d050e0
+
+	measure 'Gross Margin Status' =
+			VAR _v = [Gross Margin %] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "Gross Margin" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "Gross Margin" )
+			RETURN
+			    IF ( ISBLANK ( [Gross Margin %] ), BLANK (), SWITCH ( TRUE (), _v >= _g, "On Track", _v >= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 54dbb138-2773-45bf-8615-96cf34bccee4
+
+	measure 'Stockout Status' =
+			VAR _v = [Stockout Rate %] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "Stockout Rate" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "Stockout Rate" )
+			RETURN
+			    IF ( ISBLANK ( [Stockout Rate %] ), BLANK (), SWITCH ( TRUE (), _v <= _g, "On Track", _v <= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 517c0563-45d7-4bd1-b1a0-fca985922126
+
+	measure 'Excess Inventory Status' =
+			VAR _v = [Excess Inventory %] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "Excess Inventory" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "Excess Inventory" )
+			RETURN
+			    IF ( ISBLANK ( [Excess Inventory %] ), BLANK (), SWITCH ( TRUE (), _v <= _g, "On Track", _v <= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: cb919565-d2c2-4b99-8c6e-feab71b4bf74
+
+	measure 'Supplier OTD Status' =
+			VAR _v = [OTD%] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "On-Time Delivery (Inbound)" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "On-Time Delivery (Inbound)" )
+			RETURN
+			    IF ( ISBLANK ( [OTD%] ), BLANK (), SWITCH ( TRUE (), _v >= _g, "On Track", _v >= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 3edb259f-1607-4aac-b40e-9f98026a7198
+
+	measure 'Supplier Defect Status' =
+			VAR _v = [Supplier Defect Rate %] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "Supplier Defect Rate" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "Supplier Defect Rate" )
+			RETURN
+			    IF ( ISBLANK ( [Supplier Defect Rate %] ), BLANK (), SWITCH ( TRUE (), _v <= _g, "On Track", _v <= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: be75c063-cca0-42bc-827e-69934688ad05
+
+	measure 'Supplier Concentration Status' =
+			VAR _v = [Top Supplier Spend % (Concentration)] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "Supplier Concentration" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "Supplier Concentration" )
+			RETURN
+			    IF ( ISBLANK ( [Top Supplier Spend % (Concentration)] ), BLANK (), SWITCH ( TRUE (), _v <= _g, "On Track", _v <= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: eb94623f-a9eb-4e59-aa69-a963a66c70f6
+
+	measure 'Freight Status' =
+			VAR _v = [Freight % of Sales] * 100
+			VAR _g = LOOKUPVALUE ( Ref_Risk_Thresholds[GreenThreshold], Ref_Risk_Thresholds[Metric], "Freight % of Sales" )
+			VAR _a = LOOKUPVALUE ( Ref_Risk_Thresholds[AmberThreshold], Ref_Risk_Thresholds[Metric], "Freight % of Sales" )
+			RETURN
+			    IF ( ISBLANK ( [Freight % of Sales] ), BLANK (), SWITCH ( TRUE (), _v <= _g, "On Track", _v <= _a, "Watch", "At Risk" ) )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: cb50497d-57d9-4ebb-aad8-ca9a5ddcdda5
+
+	measure 'OTIF Color' = SWITCH ( [OTIF Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: b396e150-ed73-4044-b256-96200f20508c
+
+	measure 'Gross Margin Color' = SWITCH ( [Gross Margin Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: aeef968a-f880-41b7-a8ea-8b8f2232929b
+
+	measure 'Stockout Color' = SWITCH ( [Stockout Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: a9de6ebc-4568-4f36-9d5f-02a4895f1731
+
+	measure 'Excess Inventory Color' = SWITCH ( [Excess Inventory Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: e92baff2-9c7b-457b-8efd-db3b67c7af46
+
+	measure 'Supplier OTD Color' = SWITCH ( [Supplier OTD Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 5dfc3826-5463-4d72-bd3f-90cf33e65667
+
+	measure 'Supplier Defect Color' = SWITCH ( [Supplier Defect Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 5c894102-6c87-4225-be12-5f18495656c4
+
+	measure 'Supplier Concentration Color' = SWITCH ( [Supplier Concentration Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 0412bd42-e9b9-4d35-897a-4f80caefc4d5
+
+	measure 'Freight Color' = SWITCH ( [Freight Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: d41c4ff0-9522-45d5-8f4a-d0d9c78136d4
+
+	measure 'Inventory Turns Color' = SWITCH ( [Inventory Turns Status], "On Track", "#2E9E6B", "Watch", "#E8A33D", "At Risk", "#D64545", BLANK () )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: ae603d4e-43d6-4e24-b706-8ce703485439
+
+	measure 'Revenue YoY % (vs PY)' =
+			
+			VAR _y = YEAR(DATE("2024","12","31"))
+			VAR _cur = CALCULATE ( [Revenue], REMOVEFILTERS ( Dim_Date ), Dim_Date[Year] = _y )
+			VAR _py = CALCULATE ( [Revenue], REMOVEFILTERS ( Dim_Date ), Dim_Date[Year] = _y - 1 )
+			RETURN
+			    DIVIDE ( _cur - _py, _py )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligeance
+		lineageTag: f78167e0-defe-4568-ae21-0a37cefe5962
+
+	measure 'Revenue YoY Color' = IF ( [Revenue YoY % (vs PY)] >= 0, "#2E9E6B", "#D64545" )
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: eb65dbdc-62aa-4dc6-8c9a-cdf4efc3613b
+
+	measure 'Revenue PY (chart)' = IF ( NOT ISBLANK ( [Revenue] ), [Revenue PY] )
+		formatString: \$#,0
+		displayFolder: Time Intelligeance
+		lineageTag: 50e7fa78-85c4-4374-8f73-b38fd86d8bc7
+
+	measure 'OTIF On Track' = IF ( [OTIF Status] = "On Track", [OTIF%] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 09def588-5b41-4d6b-9631-eacfbe87498e
+
+	measure 'OTIF Watch' = IF ( [OTIF Status] = "Watch", [OTIF%] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 551261ae-2356-4844-822e-0f836649a8f8
+
+	measure 'OTIF At Risk' = IF ( [OTIF Status] = "At Risk", [OTIF%] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 80394afa-81bc-45ea-9605-268470d7ee59
+
+	measure 'Supplier OTD On Track' = IF ( [Supplier OTD Status] = "On Track", [OTD%] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 7dbd9bf2-11a8-4d85-af94-4d36323efbe0
+
+	measure 'Supplier OTD Watch' = IF ( [Supplier OTD Status] = "Watch", [OTD%] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: d53eac36-5097-41b6-99a6-9829cb111db5
+
+	measure 'Supplier OTD At Risk' = IF ( [Supplier OTD Status] = "At Risk", [OTD%] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 KPI Status & Thresholds
+		lineageTag: 73e15fc5-f936-4d72-8362-d59cc740a2f8
+
+	measure 'PO Spend High Risk' = CALCULATE([PO Spend],Dim_Supplier[RiskTier]="High")
+		formatString: \$#,0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 20d4e711-4cf0-49a3-9f42-a4937994f86d
+
+	measure 'PO Spend Medium Risk' = CALCULATE([PO Spend],Dim_Supplier[RiskTier]="Medium")
+		formatString: \$#,0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 3f7179d3-8259-411f-85cd-65857592b56f
+
+	measure 'PO Spend Low Risk' = CALCULATE([PO Spend],Dim_Supplier[RiskTier]="Low")
+		formatString: \$#,0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 3512878b-86c7-4b1e-a23f-e1ff7de5924f
+
+	measure 'Avg Planned Lead Time' = AVERAGE(Fact_Purchases[PlannedLeadTimeDays])
+		formatString: 0.0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 987e49c0-62c3-422a-821a-4d715a6a458f
+
+	measure 'Supplier Risk Score' = AVERAGE(Dim_Supplier[RiskScore])
+		formatString: 0
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: bec26c2a-ccad-4911-aeb3-771ad170d816
+
+	measure 'Selected Supplier' = SELECTEDVALUE(Dim_Supplier[SupplierName],"All suppliers")
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: e520e015-0b83-45f4-9a94-01bd542266ca
+
+	measure 'In-fill % PY' = CALCULATE([In_full %],DATEADD(Dim_Date[Date],-12,MONTH))
+		displayFolder: Time Intelligeance
+		lineageTag: 27e4ea27-3bf6-4203-9580-cc9500e52dc3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'On_Time % PY' = CALCULATE([On_Time %],DATEADD(Dim_Date[Date],-12,MONTH))
+		displayFolder: Time Intelligeance
+		lineageTag: fea9cfe6-156c-43af-b8db-d794b0522be1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Gross Sales (List Price)' = SUMX ( Fact_Sales, Fact_Sales[OrderQty] * Fact_Sales[UnitPrice] )
+		formatString: \$#,0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: d1a2eb61-999d-433b-b66a-acdf85525978
+
+	measure 'PL Anchor Year' =
+			YEAR (
+			    CALCULATE (
+			        MAX ( Fact_Sales[OrderDate] ),
+			        REMOVEFILTERS ( Dim_Warehouse ),
+			        REMOVEFILTERS ( Dim_Product ),
+			        REMOVEFILTERS ( Dim_Customer )
+			    )
+			)
+		formatString: 0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 38797ffd-c142-4190-8484-7a3cc3113037
+
+	measure 'PL Period Label' =
+			VAR y = [PL Anchor Year]
+			RETURN y & " - " & ( y - 1 )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 8938ca3b-a2b2-4979-89f6-538ea5366aac
+
+	measure 'PL Amount' =
+			VAR lineId = SELECTEDVALUE ( 'PL Lines'[LineID] )
+			VAR gross = [Gross Sales (List Price)]
+			VAR disc = [Total Discount Value]
+			VAR netrev = [Revenue]
+			VAR cogs = [Total COGS]
+			VAR gp = [Gross_Profit]
+			VAR frt = [Freight Cost]
+			VAR ppv = [PPV (Purchase Price Variance)]
+			RETURN
+			    SWITCH (
+			        lineId,
+			        1, gross,
+			        2, -disc,
+			        3, netrev,
+			        4, -cogs,
+			        5, gp,
+			        6, -frt,
+			        7, -ppv,
+			        8, gp - frt - ppv
+			    )
+		formatString: \$#,0;(\$#,0);\$0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 9189cc69-7ce8-465a-b976-0a1af563fc71
+
+	measure 'PL CY' =
+			VAR y = [PL Anchor Year]
+			RETURN CALCULATE ( [PL Amount], Dim_Date[Year] = y )
+		formatString: \$#,0;(\$#,0);\$0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 83fc5007-ae24-4aad-b00a-ce14c2861f15
+
+	measure 'PL PY' =
+			
+			VAR y = [PL Anchor Year]
+			RETURN CALCULATE ( [PL Amount], Dim_Date[Year] = y - 1 )
+		formatString: \$#,0;(\$#,0);\$0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: f6b43405-11c7-4c32-9ab6-a4883dcc8f60
+
+	measure 'PL Var' = [PL CY] - [PL PY]
+		formatString: +\$#,0;-\$#,0;\$0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 0d1f3510-46c2-4e07-ad34-d2bdc939e068
+
+	measure 'PL Var %' =
+			
+			VAR cy = [PL CY]
+			VAR py = [PL PY]
+			RETURN
+			DIVIDE ( cy - py, ABS ( py ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 7c7acd30-b0e3-4052-ac29-b3b486d8e540
+
+	measure 'PL % of Net Revenue' =
+			IF (
+			    SELECTEDVALUE ( 'PL Lines'[LineID] ) <> 1,
+			    DIVIDE ( [PL CY], CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 3 ) )
+			)
+		formatString: 0.0%;(0.0%);0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 2674b305-a24d-4264-98c0-cace94183ba6
+
+	measure 'PL % of Net Revenue PY' =
+			IF (
+			    SELECTEDVALUE ( 'PL Lines'[LineID] ) <> 1,
+			    DIVIDE ( [PL PY], CALCULATE ( [PL PY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 3 ) )
+			)
+		formatString: 0.0%;(0.0%);0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 489fe7ee-9be0-4906-a8e9-0e3f48413bdb
+
+	measure 'PL Var pp' = ( [PL % of Net Revenue] - [PL % of Net Revenue PY] ) * 100
+		formatString: +0.0" pp";-0.0" pp";0.0" pp"
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: d7d0a909-12b5-483f-8750-107762a4bfcf
+
+	measure 'PL Var Color' = IF ( ISBLANK ( [PL Var] ), "#9AA8BC", IF ( [PL Var] >= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: cceeca48-91aa-4804-94d4-a8fc5e2ea3ca
+
+	measure 'PL Var pp Color' = IF ( ISBLANK ( [PL Var pp] ), "#9AA8BC", IF ( [PL Var pp] >= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: bddcd98d-d7bf-481c-b321-6a6495bbe89f
+
+	measure 'PL Row Fill' = SWITCH ( SELECTEDVALUE ( 'PL Lines'[Type] ), "Subtotal", "#EEF3FB", "Net", "#DCE8FB", "#FFFFFF" )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 54b254c3-b725-4a78-a480-c962c462d961
+
+	measure 'PL Net Revenue' = CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 3 )
+		formatString: \$#,0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 66626529-0fd2-4920-82aa-a709934d845a
+
+	measure 'PL Net Revenue Var %' = CALCULATE ( [PL Var %], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 3 )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 550120ba-6864-44ee-9f67-7bb037f87d21
+
+	measure 'PL Net Revenue Color' = IF ( ISBLANK ( [PL Net Revenue Var %] ), "#9AA8BC", IF ( [PL Net Revenue Var %] >= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: dc8ce465-dcc6-48f9-bd06-950ac14f33c9
+
+	measure 'PL Gross Profit' = CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 5 )
+		formatString: \$#,0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 5a4cce65-4854-4e1e-a055-f1ca85e7cccc
+
+	measure 'PL Gross Profit Var %' = CALCULATE ( [PL Var %], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 5 )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: a820d32c-867e-4d3e-a46b-2632dd939897
+
+	measure 'PL Gross Profit Color' = IF ( ISBLANK ( [PL Gross Profit Var %] ), "#9AA8BC", IF ( [PL Gross Profit Var %] >= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 49dde740-dacc-4816-9c68-996a388a6383
+
+	measure 'PL Contribution' = CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 8 )
+		formatString: \$#,0
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 279ca6e8-0b42-4ff0-b0dc-f43eff330450
+
+	measure 'PL Contribution Var %' = CALCULATE ( [PL Var %], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 8 )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 5cdd7fb9-0c99-476c-8cba-4f206389e48c
+
+	measure 'PL Contribution Color' = IF ( ISBLANK ( [PL Contribution Var %] ), "#9AA8BC", IF ( [PL Contribution Var %] >= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 49c88705-6bb7-44b7-9cba-2087de47b5ab
+
+	measure 'PL Contribution Margin %' = DIVIDE ( [PL Contribution], [PL Net Revenue] )
+		formatString: 0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 1ed1b983-a05c-46ff-9b78-ba4bd5752dfa
+
+	measure 'PL Contribution Margin % PY' =
+			DIVIDE (
+			    CALCULATE ( [PL PY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 8 ),
+			    CALCULATE ( [PL PY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 3 )
+			)
+		formatString: 0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: d40d535a-c03b-4321-a201-2eabb77afcf7
+
+	measure 'PL Contribution Margin Var pp' =
+			IF (
+			    NOT ISBLANK ( [PL Contribution Margin % PY] ),
+			    ( [PL Contribution Margin %] - [PL Contribution Margin % PY] ) * 100
+			)
+		formatString: +0.0" pp";-0.0" pp";0.0" pp"
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 13167cc3-923c-4006-8db9-0f86fdad1987
+
+	measure 'PL Margin Color' = IF ( ISBLANK ( [PL Contribution Margin Var pp] ), "#9AA8BC", IF ( [PL Contribution Margin Var pp] >= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: ab89cb4b-9e6f-4ed7-8429-f59ef69b34c0
+
+	measure 'PL Freight % of Net Revenue' = DIVIDE ( -CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 6 ), CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 3 ) )
+		formatString: 0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 09cda421-7a6c-4801-afa0-e88f1c145925
+
+	measure 'PL Freight % of Net Revenue PY' = DIVIDE ( -CALCULATE ( [PL PY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 6 ), CALCULATE ( [PL PY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 3 ) )
+		formatString: 0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 6ac37cd6-49b3-4d1e-9a18-9b857afdceec
+
+	measure 'PL Freight % of Net Revenue Var pp' =
+			IF (
+			    NOT ISBLANK ( [PL Freight % of Net Revenue PY] ),
+			    ( [PL Freight % of Net Revenue] - [PL Freight % of Net Revenue PY] ) * 100
+			)
+		formatString: +0.0" pp";-0.0" pp";0.0" pp"
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 425c4e07-a3d5-4367-8310-b9d139196223
+
+	measure 'PL Freight Color' = IF ( ISBLANK ( [PL Freight % of Net Revenue Var pp] ), "#9AA8BC", IF ( [PL Freight % of Net Revenue Var pp] <= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 8c96c614-dbc7-4d75-9001-9087317028f7
+
+	measure 'PL Discount % of Gross Sales' = DIVIDE ( -CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 2 ), CALCULATE ( [PL CY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 1 ) )
+		formatString: 0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 0bb43259-673f-49e4-97de-1e898fb9e31e
+
+	measure 'PL Discount % of Gross Sales PY' = DIVIDE ( -CALCULATE ( [PL PY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 2 ), CALCULATE ( [PL PY], REMOVEFILTERS ( 'PL Lines' ), 'PL Lines'[LineID] = 1 ) )
+		formatString: 0.0%
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 0d5b25e1-7d33-4dc5-8111-d09aa0ec7b57
+
+	measure 'PL Discount % of Gross Sales Var pp' =
+			IF (
+			    NOT ISBLANK ( [PL Discount % of Gross Sales PY] ),
+			    ( [PL Discount % of Gross Sales] - [PL Discount % of Gross Sales PY] ) * 100
+			)
+		formatString: +0.0" pp";-0.0" pp";0.0" pp"
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 64f0b084-46c9-4dbe-bb35-0587068e8145
+
+	measure 'PL Discount Color' = IF ( ISBLANK ( [PL Discount % of Gross Sales Var pp] ), "#9AA8BC", IF ( [PL Discount % of Gross Sales Var pp] <= 0, "#2E9E6B", "#D64545" ) )
+		displayFolder: 07 Supply Chain P&L
+		lineageTag: 0d167974-099f-49ba-9e66-fb2e06c7f851
+
+	measure 'Selected WareHouse' = SELECTEDVALUE(Dim_Warehouse[WarehouseName],"All WareHouse")
+		displayFolder: 04 Supplier Risk & Procurement
+		lineageTag: 6a566745-d436-4873-a614-3ef486e857e0
+
+	column Column
+		formatString: 0
+		displayFolder: 05 Freight & Logistics Cost
+		lineageTag: ef2fb2f0-05a4-4c12-a63b-7bd98b2febb1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 16500e9be15e4a388933a00fecef503e
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

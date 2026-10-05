@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SCM Dashbaord"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "22defb62-ad3a-4589-9a6c-b046f34e0d5d"
+  }
+}

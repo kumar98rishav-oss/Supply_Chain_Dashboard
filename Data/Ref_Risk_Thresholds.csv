@@ -1,0 +1,12 @@
+Metric,Unit,Direction,GreenThreshold,AmberThreshold,Definition
+Inventory Turns,x,Higher is better,8,5,Annualised COGS / Avg Inventory Value
+Days of Supply,days,Lower is better,45,75,On-hand / avg daily demand; too high = excess
+Stockout Rate,%,Lower is better,3,7,Share of snapshots at/under safety stock
+OTIF,%,Higher is better,95,90,On Time AND In Full share of shipments
+On-Time Delivery (Inbound),%,Higher is better,95,88,Supplier POs received on/before promised
+Supplier Defect Rate,%,Lower is better,1,3,Defect units / received units
+Forecast Accuracy,%,Higher is better,85,75,100 - MAPE
+Excess Inventory,%,Lower is better,8,15,Excess-flag value / total inventory value
+Freight % of Sales,%,Lower is better,6,9,Freight cost / sales amount
+Supplier Concentration,%,Lower is better,25,40,Top supplier share of spend (single-source risk)
+Gross Margin,%,Higher is better,30,22,Profit / Sales

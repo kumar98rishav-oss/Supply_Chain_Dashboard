@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["path","Data","Dim_Customer","Dim_Date","Dim_Product","Dim_Supplier","Dim_Warehouse","Fact_Inventory","Fact_Purchases","Fact_Sales","Fact_Shipments","Ref_Risk_Thresholds"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Dim_Date
+ref table Dim_Product
+ref table Dim_Supplier
+ref table Dim_Warehouse
+ref table Fact_Inventory
+ref table Fact_Purchases
+ref table Fact_Sales
+ref table Fact_Shipments
+ref table Ref_Risk_Thresholds
+ref table Dim_Customer
+ref table _Measures
+ref table 'CY_Dynamic Line'
+ref table 'PL Lines'
+
+ref cultureInfo en-US
+

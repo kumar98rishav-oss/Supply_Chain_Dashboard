@@ -1,0 +1,159 @@
+table Fact_Inventory
+	lineageTag: 5498b4a6-6c39-45ed-9f2f-5a3fde71eb4d
+
+	column SnapshotDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a52bfb27-20da-445d-b070-b61390301a41
+		summarizeBy: none
+		sourceColumn: SnapshotDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ab21d658-cb91-48a6-8625-241402cec23e
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WarehouseKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 49c0c433-be2b-4761-8d7a-59f5d9ba993f
+		summarizeBy: none
+		sourceColumn: WarehouseKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnHandUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: 07b72bc5-fb65-4ed9-afbb-0a3205c767ab
+		summarizeBy: sum
+		sourceColumn: OnHandUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column InTransitUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: 86e2d8d0-3cfb-4ef9-8cd6-f7cfda4cc768
+		summarizeBy: sum
+		sourceColumn: InTransitUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column AllocatedUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ac781f9-92b2-4fd8-baef-3bf20d6f8d88
+		summarizeBy: sum
+		sourceColumn: AllocatedUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvailableUnits
+		dataType: int64
+		formatString: 0
+		lineageTag: e1572567-59ed-40c0-8c02-afb549014c51
+		summarizeBy: sum
+		sourceColumn: AvailableUnits
+
+		annotation SummarizationSetBy = Automatic
+
+	column SafetyStock
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ebeea5a-ee89-4c72-8385-39cabe3a8af1
+		summarizeBy: sum
+		sourceColumn: SafetyStock
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReorderPoint
+		dataType: int64
+		formatString: 0
+		lineageTag: e27311c1-8d66-433b-b77d-8ef92dd22c6f
+		summarizeBy: sum
+		sourceColumn: ReorderPoint
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: double
+		lineageTag: 7b0293fb-a21d-4a70-8f16-adaf49711007
+		summarizeBy: sum
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column InventoryValue
+		dataType: double
+		lineageTag: ca3c278b-a0bf-4eca-922f-710914bb859c
+		summarizeBy: sum
+		sourceColumn: InventoryValue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DaysOfSupply
+		dataType: double
+		lineageTag: d03c1902-6e61-4e81-9a58-b5329395b697
+		summarizeBy: sum
+		sourceColumn: DaysOfSupply
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column StockoutFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 3daefc6a-a641-4684-85bd-1aaf5c577b53
+		summarizeBy: sum
+		sourceColumn: StockoutFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExcessFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: 26779dc2-b67e-4ae3-b260-16ed8ec4c4a9
+		summarizeBy: sum
+		sourceColumn: ExcessFlag
+
+		annotation SummarizationSetBy = Automatic
+
+	column InventoryAgeDays
+		dataType: int64
+		formatString: 0
+		lineageTag: e307c262-8f65-478d-99e7-150f6d42083f
+		summarizeBy: sum
+		sourceColumn: InventoryAgeDays
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Inventory = m
+		mode: import
+		source =
+				let
+				    Source = Data,
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Inventory csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Fact_Inventory.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Fact_Inventory csv",[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SnapshotDate", type date}, {"ProductKey", Int64.Type}, {"WarehouseKey", Int64.Type}, {"OnHandUnits", Int64.Type}, {"InTransitUnits", Int64.Type}, {"AllocatedUnits", Int64.Type}, {"AvailableUnits", Int64.Type}, {"SafetyStock", Int64.Type}, {"ReorderPoint", Int64.Type}, {"UnitCost", type number}, {"InventoryValue", type number}, {"DaysOfSupply", type number}, {"StockoutFlag", Int64.Type}, {"ExcessFlag", Int64.Type}, {"InventoryAgeDays", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,90 @@
+table Ref_Risk_Thresholds
+	isHidden
+	lineageTag: d4a59c1a-66c0-463b-a58f-b9dc668f10d1
+
+	column Metric
+		dataType: string
+		isHidden
+		lineageTag: 532c6721-b87e-4b3e-bf29-14414218d123
+		summarizeBy: none
+		sourceColumn: Metric
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit
+		dataType: string
+		isHidden
+		lineageTag: aa791141-9b7f-43bc-8582-e88eb7a20f76
+		summarizeBy: none
+		sourceColumn: Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Direction
+		dataType: string
+		isHidden
+		lineageTag: 754d1e09-8bee-467c-a2bf-d97e2b4fed7c
+		summarizeBy: none
+		sourceColumn: Direction
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column GreenThreshold
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f9351925-332b-4665-9500-9a2a706f5ff8
+		summarizeBy: sum
+		sourceColumn: GreenThreshold
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AmberThreshold
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a6bfcad5-666c-4231-8a6c-c4a0825c1473
+		summarizeBy: sum
+		sourceColumn: AmberThreshold
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Definition
+		dataType: string
+		isHidden
+		lineageTag: d84ddd7d-a2bb-411a-b325-97f3667ceb37
+		summarizeBy: none
+		sourceColumn: Definition
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ref_Risk_Thresholds = m
+		mode: import
+		source =
+				let
+				    Source = Data,
+				    #"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Ref_Risk_Thresholds csv" = Source{[#"Folder Path"="E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\",Name="Ref_Risk_Thresholds.csv"]}[Content],
+				    #"Imported CSV" = Csv.Document(#"E:\Data Analyst\POWER BI\Dasboards\Supply-Chain-Management-Dataset-main\Supply-Chain-Management-Dataset-main\files\_Ref_Risk_Thresholds csv",[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Metric", type text}, {"Unit", type text}, {"Direction", type text}, {"GreenThreshold", Int64.Type}, {"AmberThreshold", Int64.Type}, {"Definition", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
